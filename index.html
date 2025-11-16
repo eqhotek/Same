@@ -2,13 +2,27 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>$SAME – The OG SAME Coin</title>
+  <title>$SAME – The OG SAME Coin | Solana Meme Token</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="description" content="$SAME – the OG SAME coin. Exposing copy-paste tickers and lazy vamps. Ever been rugged? Same." />
-  <link rel="icon" href="https://example.com/favicon.ico" type="image/x-icon">
+  <meta name="description" content="$SAME – the OG SAME coin on Solana. Exposing copy-paste tickers and lazy vamps. Ever been rugged? Same. Join the original $SAME community." />
+  <meta name="keywords" content="SAME coin, Solana meme coin, crypto scanner, OG SAME, pump.fun, Solana token, meme cryptocurrency">
+
+  <!-- Favicon -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧬</text></svg>" type="image/svg+xml">
+
+  <!-- Open Graph / Social Media -->
+  <meta property="og:type" content="website">
   <meta property="og:title" content="$SAME – The OG SAME Coin">
   <meta property="og:description" content="Exposing copy-paste tickers and lazy vamps. Ever been rugged? Same.">
   <meta property="og:image" content="https://example.com/og-image.png">
+  <meta property="og:url" content="https://yoursite.com">
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="$SAME – The OG SAME Coin">
+  <meta name="twitter:description" content="The original SAME coin on Solana. Verify before you buy.">
+  <meta name="twitter:image" content="https://example.com/og-image.png">
+
   <style>
     * {
       box-sizing: border-box;
@@ -16,17 +30,86 @@
       padding: 0;
     }
 
+    :root {
+      /* Light mode */
+      --bg-sky-start: #e0f2fe;
+      --bg-sky-mid: #7dd3fc;
+      --bg-sky-end: #38bdf8;
+      --bg-sky-deep: #0f5cbf;
+      --cloud-color: rgba(255, 255, 255, 0.95);
+      --cloud-color-light: rgba(255, 255, 255, 0.85);
+
+      --app-bg: rgba(255, 255, 255, 0.98);
+      --app-border: rgba(148, 163, 184, 0.4);
+      --text-primary: #020617;
+      --text-secondary: #475569;
+      --text-tertiary: #64748b;
+
+      --badge-bg: rgba(241, 245, 249, 0.9);
+      --badge-border: rgba(148, 163, 184, 0.5);
+      --badge-text: #475569;
+
+      --card-bg: rgba(248, 250, 252, 0.98);
+      --card-border: rgba(203, 213, 225, 0.95);
+
+      --input-bg: rgba(248, 250, 252, 0.98);
+      --input-border: rgba(203, 213, 225, 0.95);
+
+      --status-ok: #16a34a;
+      --status-err: #dc2626;
+
+      --link-color: #2563eb;
+      --link-hover: #1d4ed8;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root {
+        /* Dark mode */
+        --bg-sky-start: #020617;
+        --bg-sky-mid: #0b1120;
+        --bg-sky-end: #1d4ed8;
+        --bg-sky-deep: #020617;
+        --cloud-color: rgba(148, 163, 184, 0.22);
+        --cloud-color-light: rgba(75, 85, 99, 0.16);
+
+        --app-bg: rgba(15, 23, 42, 0.96);
+        --app-border: rgba(148, 163, 184, 0.5);
+        --text-primary: #f9fafb;
+        --text-secondary: #e5e7eb;
+        --text-tertiary: #9ca3af;
+
+        --badge-bg: rgba(15, 23, 42, 0.92);
+        --badge-border: rgba(148, 163, 184, 0.7);
+        --badge-text: #e5e7eb;
+
+        --card-bg: rgba(15, 23, 42, 0.96);
+        --card-border: rgba(55, 65, 81, 0.95);
+
+        --input-bg: rgba(15, 23, 42, 0.96);
+        --input-border: rgba(75, 85, 99, 0.9);
+
+        --status-ok: #4ade80;
+        --status-err: #fb7185;
+
+        --link-color: #a5b4fc;
+        --link-hover: #818cf8;
+      }
+    }
+
     body {
       font-family: system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text",
         "Segoe UI", sans-serif;
-      /* Sky + cloud vibe */
+      line-height: 1.5;
+      /* Blue sky + clouds */
       background:
-        radial-gradient(circle at 15% 20%, rgba(255,255,255,0.9) 0, rgba(255,255,255,0) 35%),
-        radial-gradient(circle at 70% 15%, rgba(255,255,255,0.9) 0, rgba(255,255,255,0) 35%),
-        radial-gradient(circle at 40% 35%, rgba(255,255,255,0.8) 0, rgba(255,255,255,0) 40%),
-        linear-gradient(180deg, #93c5fd 0%, #60a5fa 35%, #1d4ed8 70%, #020617 100%);
+        radial-gradient(ellipse 320px 220px at 18% 22%, var(--cloud-color) 0%, transparent 55%),
+        radial-gradient(ellipse 380px 240px at 78% 18%, var(--cloud-color-light) 0%, transparent 55%),
+        radial-gradient(ellipse 300px 200px at 46% 40%, var(--cloud-color) 0%, transparent 55%),
+        radial-gradient(ellipse 320px 200px at 12% 68%, var(--cloud-color-light) 0%, transparent 50%),
+        radial-gradient(ellipse 380px 240px at 70% 72%, var(--cloud-color) 0%, transparent 55%),
+        linear-gradient(180deg, var(--bg-sky-start) 0%, var(--bg-sky-mid) 35%, var(--bg-sky-end) 70%, var(--bg-sky-deep) 100%);
       background-attachment: fixed;
-      color: #f9fafb;
+      color: var(--text-primary);
       min-height: 100vh;
       display: flex;
       align-items: center;
@@ -35,31 +118,33 @@
     }
 
     .app {
-      max-width: 1100px;
+      max-width: 1180px;
       width: 100%;
-      border-radius: 24px;
-      padding: 22px 16px 22px;
-      background: rgba(15, 23, 42, 0.92);
-      border: 1px solid rgba(148, 163, 184, 0.45);
-      box-shadow: 0 24px 60px rgba(0, 0, 0, 0.7);
+      border-radius: 28px;
+      padding: 26px 18px 22px;
+      background: var(--app-bg);
+      border: 1px solid var(--app-border);
+      box-shadow:
+        0 24px 60px rgba(15, 23, 42, 0.4),
+        0 0 0 1px rgba(255, 255, 255, 0.3);
       backdrop-filter: blur(18px);
-      animation: fadeIn 0.5s ease-in;
+      animation: fadeIn 0.45s ease-out;
     }
 
     @keyframes fadeIn {
-      from { opacity: 0; }
-      to { opacity: 1; }
+      from { opacity: 0; transform: translateY(18px) scale(0.99); }
+      to { opacity: 1; transform: translateY(0) scale(1); }
     }
 
     @media (min-width: 768px) {
       .app {
-        padding: 28px 24px 24px;
+        padding: 32px 26px 26px;
       }
     }
 
     @media (min-width: 1024px) {
       .app {
-        padding: 32px 32px 26px;
+        padding: 36px 32px 28px;
       }
     }
 
@@ -68,40 +153,40 @@
       flex-wrap: wrap;
       gap: 8px;
       align-items: center;
-      margin-bottom: 16px;
-      font-size: 12px;
+      margin-bottom: 18px;
+      font-size: 11px;
       text-transform: uppercase;
-      letter-spacing: 0.12em;
-      color: #e5e7eb;
+      letter-spacing: 0.16em;
+      color: var(--text-primary);
     }
 
     .badge {
-      padding: 4px 8px;
+      padding: 4px 10px;
       border-radius: 999px;
-      border: 1px solid rgba(148, 163, 184, 0.7);
-      background: rgba(15, 23, 42, 0.9);
-      color: #9ca3af;
+      border: 1px solid var(--badge-border);
+      background: var(--badge-bg);
+      color: var(--badge-text);
     }
 
     .hero {
       display: grid;
       grid-template-columns: minmax(0, 1fr);
-      gap: 24px;
+      gap: 26px;
     }
 
-    @media (min-width: 960px) {
+    @media (min-width: 980px) {
       .hero {
-        grid-template-columns: minmax(0, 3fr) minmax(0, 2.2fr);
+        grid-template-columns: minmax(0, 3fr) minmax(0, 2.1fr);
         align-items: flex-start;
-        gap: 28px;
+        gap: 32px;
       }
     }
 
     .hero-main h1 {
-      font-size: clamp(30px, 5vw, 40px);
+      font-size: clamp(32px, 5vw, 42px);
       line-height: 1.05;
       letter-spacing: -0.04em;
-      margin-bottom: 10px;
+      margin-bottom: 12px;
     }
 
     .hero-highlight {
@@ -113,19 +198,20 @@
 
     .hero-sub {
       font-size: 15px;
-      color: #d1d5db;
-      max-width: 520px;
-      margin-bottom: 16px;
+      color: var(--text-secondary);
+      max-width: 540px;
+      margin-bottom: 18px;
     }
 
     .hero-sub em {
-      color: #e5e7eb;
+      color: var(--text-primary);
       font-style: italic;
+      font-weight: 500;
     }
 
     .hero-meme {
       font-size: 14px;
-      color: #9ca3af;
+      color: var(--text-tertiary);
       margin-bottom: 20px;
     }
 
@@ -135,10 +221,17 @@
       gap: 8px;
       padding: 8px 12px;
       border-radius: 999px;
-      background: rgba(15, 118, 110, 0.2);
+      background: rgba(15, 118, 110, 0.15);
       border: 1px solid rgba(45, 212, 191, 0.6);
       font-size: 13px;
-      color: #a5f3fc;
+      color: #0f766e;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      .meme-pill {
+        background: rgba(15, 118, 110, 0.2);
+        color: #a5f3fc;
+      }
     }
 
     .meme-pill span {
@@ -164,26 +257,49 @@
       gap: 8px;
       text-decoration: none;
       white-space: nowrap;
+      transition: all 0.18s ease-out;
     }
 
     .btn-primary {
       background: linear-gradient(120deg, #22c55e, #a3e635);
       color: #052e16;
       font-weight: 600;
-      box-shadow: 0 12px 30px rgba(34, 197, 94, 0.45);
+      box-shadow: 0 16px 40px rgba(34, 197, 94, 0.4);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-1px) scale(1.01);
+      box-shadow: 0 18px 44px rgba(34, 197, 94, 0.5);
     }
 
     .btn-outline {
-      background: rgba(15, 23, 42, 0.8);
-      border: 1px solid rgba(148, 163, 184, 0.8);
-      color: #e5e7eb;
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      color: var(--text-primary);
+    }
+
+    .btn-outline:hover {
+      border-color: rgba(59, 130, 246, 0.8);
+      transform: translateY(-1px);
+      box-shadow: 0 8px 20px rgba(15, 23, 42, 0.08);
     }
 
     .btn-wallet {
-      background: rgba(30, 64, 175, 0.25);
-      border: 1px solid rgba(59, 130, 246, 0.8);
-      color: #bfdbfe;
+      background: rgba(30, 64, 175, 0.14);
+      border: 1px solid rgba(59, 130, 246, 0.7);
+      color: #1d4ed8;
       font-weight: 500;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      .btn-wallet {
+        background: rgba(30, 64, 175, 0.28);
+        color: #bfdbfe;
+      }
+    }
+
+    .btn-wallet:hover {
+      background: rgba(30, 64, 175, 0.22);
     }
 
     .btn span.icon {
@@ -192,32 +308,32 @@
 
     .status {
       font-size: 13px;
-      color: #9ca3af;
+      color: var(--text-tertiary);
       min-height: 18px;
-      margin-bottom: 4px;
+      margin-bottom: 6px;
     }
 
     .status.ok {
-      color: #4ade80;
+      color: var(--status-ok);
     }
 
     .status.err {
-      color: #fb7185;
+      color: var(--status-err);
     }
 
     .token-card {
       margin-top: 10px;
       padding: 12px 14px;
       border-radius: 16px;
-      background: rgba(15, 23, 42, 0.9);
-      border: 1px solid rgba(75, 85, 99, 0.9);
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
       font-size: 13px;
       display: grid;
       gap: 4px;
     }
 
     .token-label {
-      color: #9ca3af;
+      color: var(--text-tertiary);
       text-transform: uppercase;
       letter-spacing: 0.1em;
       font-size: 11px;
@@ -228,6 +344,7 @@
       justify-content: space-between;
       align-items: center;
       gap: 8px;
+      flex-wrap: wrap;
     }
 
     .token-value {
@@ -235,102 +352,22 @@
       font-family: "SF Mono", ui-monospace, Menlo, Monaco, Consolas,
         "Liberation Mono", "Courier New", monospace;
       font-size: 12px;
-      color: #e5e7eb;
+      color: var(--text-primary);
     }
 
     .copy-btn {
       font-size: 11px;
       padding: 6px 10px;
       border-radius: 999px;
-      border: 1px solid rgba(148, 163, 184, 0.8);
-      background: rgba(15, 23, 42, 0.95);
+      border: 1px solid var(--card-border);
+      background: var(--card-bg);
       cursor: pointer;
-      color: #e5e7eb;
+      color: var(--text-primary);
     }
 
-    .memes {
-      margin-top: 16px;
-      padding-top: 14px;
-      border-top: 1px dashed rgba(55, 65, 81, 0.9);
-      display: grid;
-      gap: 10px;
-      font-size: 13px;
-    }
-
-    .memes-title {
-      font-size: 12px;
-      text-transform: uppercase;
-      letter-spacing: 0.12em;
-      color: #9ca3af;
-    }
-
-    .meme-grid {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-    }
-
-    .meme-tag {
-      padding: 6px 10px;
-      border-radius: 999px;
-      border: 1px solid rgba(75, 85, 99, 0.9);
-      background: rgba(15, 23, 42, 0.8);
-      color: #e5e7eb;
-      font-size: 12px;
-    }
-
-    .verify-block {
-      margin-top: 16px;
-      padding-top: 14px;
-      border-top: 1px dashed rgba(55, 65, 81, 0.9);
-      font-size: 13px;
-    }
-
-    .verify-title {
-      font-size: 12px;
-      text-transform: uppercase;
-      letter-spacing: 0.12em;
-      color: #9ca3af;
-      margin-bottom: 6px;
-    }
-
-    .list {
-      font-size: 12px;
-      color: #9ca3af;
-      padding-left: 18px;
-    }
-
-    .list li {
-      margin-bottom: 4px;
-    }
-
-    .hero-side {
-      border-radius: 18px;
-      padding: 16px 16px 14px;
-      background: radial-gradient(circle at top, rgba(55, 65, 81, 0.7), #020617);
-      border: 1px solid rgba(31, 41, 55, 0.95);
-      box-shadow: 0 18px 40px rgba(0, 0, 0, 0.8);
-      font-size: 13px;
-    }
-
-    .hero-side-title {
-      font-size: 13px;
-      text-transform: uppercase;
-      letter-spacing: 0.16em;
-      color: #9ca3af;
-      margin-bottom: 8px;
-    }
-
-    .hero-side-body {
-      font-size: 13px;
-      color: #e5e7eb;
-      margin-bottom: 12px;
-    }
-
-    .mono {
-      font-family: ui-monospace, Menlo, Monaco, Consolas, "Liberation Mono",
-        "Courier New", monospace;
-      word-break: break-all;
+    .copy-btn:hover {
+      background: rgba(59, 130, 246, 0.08);
+      border-color: rgba(59, 130, 246, 0.5);
     }
 
     /* $SAME live stats card */
@@ -338,17 +375,31 @@
       margin-top: 14px;
       padding: 12px 14px;
       border-radius: 16px;
-      background: radial-gradient(circle at top left, rgba(59,130,246,0.5), rgba(15,23,42,0.95));
-      border: 1px solid rgba(59, 130, 246, 0.8);
+      background: linear-gradient(135deg, rgba(59,130,246,0.08), rgba(168,85,247,0.1));
+      border: 1px solid rgba(59, 130, 246, 0.4);
       font-size: 13px;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      .same-stats {
+        background: radial-gradient(circle at top left, rgba(59,130,246,0.35), rgba(15,23,42,0.96));
+        border: 1px solid rgba(59, 130, 246, 0.86);
+      }
     }
 
     .same-stats-title {
       font-size: 12px;
       text-transform: uppercase;
       letter-spacing: 0.12em;
-      color: #bfdbfe;
+      color: #1d4ed8;
       margin-bottom: 8px;
+      font-weight: 600;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      .same-stats-title {
+        color: #bfdbfe;
+      }
     }
 
     .same-stats-grid {
@@ -367,28 +418,225 @@
       font-size: 11px;
       text-transform: uppercase;
       letter-spacing: 0.1em;
-      color: #9ca3af;
+      color: var(--text-tertiary);
       margin-bottom: 2px;
     }
 
     .same-stat-value {
-      font-size: 13px;
-      font-weight: 500;
-      color: #f9fafb;
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text-primary);
     }
 
     .same-stats-foot {
       margin-top: 8px;
       font-size: 11px;
-      color: #9ca3af;
+      color: var(--text-tertiary);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .refresh-btn {
+      font-size: 16px;
+      cursor: pointer;
+      padding: 2px 6px;
+      border-radius: 6px;
+      background: transparent;
+      border: 1px solid transparent;
+    }
+
+    .refresh-btn:hover {
+      background: rgba(59, 130, 246, 0.1);
+      border-color: rgba(59, 130, 246, 0.3);
+    }
+
+    .refresh-btn.spinning {
+      animation: spin 1s linear;
+    }
+
+    @keyframes spin {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+
+    .memes {
+      margin-top: 18px;
+      padding-top: 14px;
+      border-top: 1px dashed var(--card-border);
+      display: grid;
+      gap: 10px;
+      font-size: 13px;
+    }
+
+    .memes-title {
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--text-tertiary);
+    }
+
+    .meme-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .meme-tag {
+      padding: 6px 10px;
+      border-radius: 999px;
+      border: 1px solid var(--card-border);
+      background: var(--card-bg);
+      color: var(--text-primary);
+      font-size: 12px;
+    }
+
+    .meme-tag:hover {
+      border-color: rgba(168, 85, 247, 0.6);
+      transform: translateY(-1px);
+    }
+
+    .verify-block,
+    .security-block,
+    .how-to-buy {
+      margin-top: 18px;
+      padding-top: 14px;
+      border-top: 1px dashed var(--card-border);
+      font-size: 13px;
+    }
+
+    .verify-title,
+    .security-title,
+    .how-to-title {
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--text-tertiary);
+      margin-bottom: 8px;
+      font-weight: 600;
+    }
+
+    .list {
+      font-size: 12px;
+      color: var(--text-tertiary);
+      padding-left: 18px;
+    }
+
+    .list li {
+      margin-bottom: 6px;
+    }
+
+    .list li strong {
+      color: var(--text-primary);
+    }
+
+    .security-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+      gap: 12px;
+      margin-top: 10px;
+    }
+
+    .security-item {
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
+      padding: 10px;
+      border-radius: 12px;
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+    }
+
+    .security-item .icon {
+      font-size: 20px;
+      flex-shrink: 0;
+    }
+
+    .security-item div {
+      font-size: 12px;
+      color: var(--text-secondary);
+    }
+
+    .security-item strong {
+      color: var(--text-primary);
+      display: block;
+      margin-bottom: 2px;
+    }
+
+    .steps-list {
+      counter-reset: step-counter;
+      list-style: none;
+      padding: 0;
+      font-size: 12px;
+      color: var(--text-secondary);
+    }
+
+    .steps-list li {
+      counter-increment: step-counter;
+      position: relative;
+      padding-left: 32px;
+      margin-bottom: 10px;
+    }
+
+    .steps-list li::before {
+      content: counter(step-counter);
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 22px;
+      height: 22px;
+      background: linear-gradient(135deg, #22c55e, #a3e635);
+      color: #052e16;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      font-weight: 600;
+    }
+
+    .hero-side {
+      border-radius: 20px;
+      padding: 16px 16px 14px;
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      box-shadow: 0 10px 24px rgba(15, 23, 42, 0.12);
+      font-size: 13px;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      .hero-side {
+        background: radial-gradient(circle at top, rgba(51, 65, 85, 0.65), rgba(15, 23, 42, 0.98));
+        box-shadow: 0 22px 50px rgba(0, 0, 0, 0.75);
+      }
+    }
+
+    .hero-side-title {
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      color: var(--text-tertiary);
+      margin-bottom: 8px;
+      font-weight: 600;
+    }
+
+    .hero-side-body {
+      font-size: 13px;
+      color: var(--text-secondary);
+      margin-bottom: 12px;
+    }
+
+    .mono {
+      font-family: ui-monospace, Menlo, Monaco, Consolas, "Liberation Mono",
+        "Courier New", monospace;
+      word-break: break-all;
     }
 
     /* --- SCANNER SECTION --- */
-
     .scanner {
-      margin-top: 24px;
-      padding-top: 18px;
-      border-top: 1px solid rgba(31, 41, 55, 0.9);
+      margin-top: 28px;
+      padding-top: 20px;
+      border-top: 1px solid var(--card-border);
     }
 
     .scanner-header {
@@ -401,14 +649,14 @@
     }
 
     .scanner-title {
-      font-size: 15px;
+      font-size: 16px;
       font-weight: 600;
     }
 
     .scanner-sub {
       font-size: 12px;
-      color: #9ca3af;
-      max-width: 420px;
+      color: var(--text-tertiary);
+      max-width: 440px;
     }
 
     .scanner-form {
@@ -422,15 +670,22 @@
       flex: 1 1 140px;
       min-width: 0;
       border-radius: 999px;
-      border: 1px solid rgba(75, 85, 99, 0.9);
-      background: rgba(15, 23, 42, 0.9);
+      border: 1px solid var(--input-border);
+      background: var(--input-bg);
       padding: 9px 12px;
-      color: #f9fafb;
+      color: var(--text-primary);
       font-size: 14px;
     }
 
+    .scanner-input:focus {
+      outline: none;
+      border-color: rgba(59, 130, 246, 0.9);
+      box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.12);
+    }
+
     .scanner-input::placeholder {
-      color: #6b7280;
+      color: var(--text-tertiary);
+      opacity: 0.7;
     }
 
     .scanner-btn {
@@ -438,26 +693,31 @@
       border: none;
       padding: 9px 16px;
       background: linear-gradient(120deg, #38bdf8, #a855f7);
-      color: #f9fafb;
+      color: #fff;
       font-size: 14px;
       font-weight: 500;
       cursor: pointer;
       white-space: nowrap;
     }
 
+    .scanner-btn:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 10px 24px rgba(56, 189, 248, 0.32);
+    }
+
     .scanner-status {
       font-size: 12px;
-      color: #9ca3af;
+      color: var(--text-tertiary);
       min-height: 18px;
       margin-bottom: 6px;
     }
 
     .scanner-status.ok {
-      color: #4ade80;
+      color: var(--status-ok);
     }
 
     .scanner-status.err {
-      color: #fb7185;
+      color: var(--status-err);
     }
 
     .results-table-wrapper {
@@ -465,9 +725,8 @@
       max-height: 260px;
       overflow: auto;
       border-radius: 12px;
-      border: 1px solid rgba(55, 65, 81, 0.9);
-      background: rgba(15, 23, 42, 0.85);
-      overflow-x: auto;
+      border: 1px solid var(--card-border);
+      background: var(--card-bg);
     }
 
     table {
@@ -477,21 +736,27 @@
     }
 
     thead {
-      background: rgba(15, 23, 42, 0.95);
+      background: var(--card-bg);
       position: sticky;
       top: 0;
       z-index: 1;
     }
 
+    @media (prefers-color-scheme: dark) {
+      thead {
+        background: rgba(15, 23, 42, 0.98);
+      }
+    }
+
     th, td {
       padding: 8px 10px;
       text-align: left;
-      border-bottom: 1px solid rgba(31, 41, 55, 0.8);
+      border-bottom: 1px solid var(--card-border);
     }
 
     th {
       font-weight: 500;
-      color: #9ca3af;
+      color: var(--text-tertiary);
       text-transform: uppercase;
       letter-spacing: 0.08em;
       font-size: 11px;
@@ -503,7 +768,13 @@
     }
 
     tbody tr:nth-child(even) {
-      background: rgba(15, 23, 42, 0.7);
+      background: rgba(148, 163, 184, 0.06);
+    }
+
+    @media (prefers-color-scheme: dark) {
+      tbody tr:nth-child(even) {
+        background: rgba(15, 23, 42, 0.6);
+      }
     }
 
     .pill-og {
@@ -514,13 +785,20 @@
       font-size: 10px;
       text-transform: uppercase;
       letter-spacing: 0.12em;
-      background: rgba(21, 128, 61, 0.2);
-      color: #bbf7d0;
-      border: 1px solid rgba(34, 197, 94, 0.7);
+      background: rgba(21, 128, 61, 0.15);
+      color: #16a34a;
+      border: 1px solid rgba(34, 197, 94, 0.6);
+    }
+
+    @media (prefers-color-scheme: dark) {
+      .pill-og {
+        background: rgba(21, 128, 61, 0.25);
+        color: #bbf7d0;
+      }
     }
 
     .link-small {
-      color: #a5b4fc;
+      color: var(--link-color);
       text-decoration: none;
       font-size: 11px;
       white-space: nowrap;
@@ -528,25 +806,128 @@
 
     .link-small:hover {
       text-decoration: underline;
+      color: var(--link-hover);
+    }
+
+    /* Community Section */
+    .community {
+      margin-top: 26px;
+      padding: 18px 18px 16px;
+      border-radius: 18px;
+      background: linear-gradient(135deg, rgba(59,130,246,0.08), rgba(168,85,247,0.1));
+      border: 1px solid rgba(59, 130, 246, 0.36);
+      text-align: center;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      .community {
+        background: linear-gradient(135deg, rgba(59,130,246,0.16), rgba(168,85,247,0.18));
+      }
+    }
+
+    .community h3 {
+      font-size: 18px;
+      margin-bottom: 12px;
+      color: var(--text-primary);
+    }
+
+    .social-links {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-bottom: 14px;
+    }
+
+    .btn-social {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      color: var(--text-primary);
+      padding: 10px 18px;
+      border-radius: 999px;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 14px;
+      font-weight: 500;
+    }
+
+    .btn-social:hover {
+      border-color: rgba(59, 130, 246, 0.85);
+      transform: translateY(-1px);
+      box-shadow: 0 8px 20px rgba(15, 23, 42, 0.12);
+    }
+
+    .share-section {
+      margin-top: 10px;
+      padding-top: 10px;
+      border-top: 1px dashed var(--card-border);
+    }
+
+    .share-section p {
+      font-size: 12px;
+      color: var(--text-tertiary);
+      margin-bottom: 8px;
+    }
+
+    .share-buttons {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .share-btn {
+      padding: 6px 12px;
+      font-size: 12px;
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      color: var(--text-primary);
+      text-decoration: none;
+      border-radius: 999px;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .share-btn:hover {
+      background: rgba(59, 130, 246, 0.1);
+      border-color: rgba(59, 130, 246, 0.5);
     }
 
     footer {
       margin-top: 18px;
       font-size: 11px;
-      color: #e5e7eb;
+      color: var(--text-secondary);
       display: flex;
       justify-content: space-between;
       gap: 8px;
       flex-wrap: wrap;
+      padding-top: 12px;
+      border-top: 1px solid var(--card-border);
     }
 
     footer a {
-      color: #a5b4fc;
+      color: var(--link-color);
       text-decoration: none;
     }
 
     footer a:hover {
       text-decoration: underline;
+    }
+
+    @media (max-width: 640px) {
+      .cta-row {
+        flex-direction: column;
+      }
+      .btn {
+        width: 100%;
+        justify-content: center;
+      }
+      .hero-side {
+        order: -1;
+      }
     }
   </style>
 </head>
@@ -555,7 +936,7 @@
     <div class="badge-row">
       <span class="badge">Solana</span>
       <span class="badge">$SAME • The OG SAME Coin</span>
-      <span>“The OG always wins.” – Pumpfun</span>
+      <span>"The OG always wins." – Pumpfun</span>
     </div>
 
     <div class="hero">
@@ -565,20 +946,20 @@
           Same ticker. Same logo. <span class="hero-highlight">Not the same coin.</span>
         </h1>
         <p class="hero-sub">
-          DeFi is flooded with lazy copy-paste “devs” dropping the
+          DeFi is flooded with lazy copy-paste "devs" dropping the
           <strong>same ticker, same photo, same everything</strong>.
-          It’s meme-level copyright infringement on repeat – and people
+          It's meme-level copyright infringement on repeat – and people
           keep grabbing the wrong bag.
           <br /><br />
           <strong>$SAME</strong> is the <u>original</u> SAME coin on Solana.
           The OG. The one Pumpfun meant when they said:
-          <em>“the OG always wins”</em> and <em>“send the vamp to 0.”</em>
+          <em>"the OG always wins"</em> and <em>"send the vamp to 0."</em>
         </p>
 
         <p class="hero-meme">
           <span class="meme-pill">
             <span>🧬</span>
-            “Same ticker, different devs. Verify the OG.”
+            "Same ticker, different devs. Verify the OG."
           </span>
         </p>
 
@@ -602,10 +983,10 @@
             class="btn btn-outline"
             target="_blank"
             rel="noopener noreferrer"
-            href="https://x.com/search?q=%24SAME%20pumpfun&src=typed_query"
+            href="https://dexscreener.com/solana/4nBQGUjd3oRSEQCkbRuBVsz1QA2XuJuXJwPWvG5Cpump"
           >
-            <span class="icon">🐦</span>
-            Join the “Same” memes
+            <span class="icon">📊</span>
+            View Chart
           </a>
         </div>
 
@@ -622,7 +1003,7 @@
           </div>
 
           <div class="token-row" style="margin-top:6px;">
-            <div>
+            <div style="flex: 1; min-width: 0;">
               <div class="token-label">Contract Address</div>
               <div class="token-value" id="caText">
                 4nBQGUjd3oRSEQCkbRuBVsz1QA2XuJuXJwPWvG5Cpump
@@ -655,31 +1036,71 @@
           </div>
           <div class="same-stats-foot" id="sameStatsFoot">
             Fetching live data…
+            <button class="refresh-btn" id="refreshStats" title="Refresh stats">🔄</button>
           </div>
         </div>
 
         <div class="memes">
           <div class="memes-title">Meme energy</div>
           <div class="meme-grid">
-            <span class="meme-tag">“Ever been rugged? Same.”</span>
-            <span class="meme-tag">“Buy the SAME coin.”</span>
-            <span class="meme-tag">“Same ticker, wrong bag.”</span>
-            <span class="meme-tag">“Same logo, different rug.”</span>
-            <span class="meme-tag">“Copy-paste devs, original consequences.”</span>
-            <span class="meme-tag">“There can only be one $SAME.”</span>
+            <span class="meme-tag">"Ever been rugged? Same."</span>
+            <span class="meme-tag">"Buy the SAME coin."</span>
+            <span class="meme-tag">"Same ticker, wrong bag."</span>
+            <span class="meme-tag">"Same logo, different rug."</span>
+            <span class="meme-tag">"Copy-paste devs, original consequences."</span>
+            <span class="meme-tag">"There can only be one $SAME."</span>
           </div>
         </div>
 
         <div class="verify-block">
-          <div class="verify-title">Verify You’re in the OG $SAME</div>
+          <div class="verify-title">Verify You're in the OG $SAME</div>
           <ul class="list">
             <li>Check the <strong>contract address</strong> matches exactly:</li>
             <li style="margin-top:4px;" class="mono">
               4nBQGUjd3oRSEQCkbRuBVsz1QA2XuJuXJwPWvG5Cpump
             </li>
-            <li style="margin-top:6px;">If the ticker is $SAME but the CA is different, it’s a clone.</li>
+            <li style="margin-top:6px;">If the ticker is $SAME but the CA is different, it's a clone.</li>
             <li>Same art + different contract = <strong>vamp</strong>, not OG.</li>
+            <li>Always verify on <a href="https://solscan.io/token/4nBQGUjd3oRSEQCkbRuBVsz1QA2XuJuXJwPWvG5Cpump" target="_blank" rel="noopener noreferrer" style="color: var(--link-color);">Solscan</a> or <a href="https://birdeye.so/token/4nBQGUjd3oRSEQCkbRuBVsz1QA2XuJuXJwPWvG5Cpump?chain=solana" target="_blank" rel="noopener noreferrer" style="color: var(--link-color);">Birdeye</a>.</li>
           </ul>
+        </div>
+
+        <div class="security-block">
+          <div class="security-title">Security & Transparency</div>
+          <div class="security-grid">
+            <div class="security-item">
+              <span class="icon">🔒</span>
+              <div>
+                <strong>Contract Visibility</strong>
+                Original Pump.fun deployment. Always verify contract before buying.
+              </div>
+            </div>
+            <div class="security-item">
+              <span class="icon">✅</span>
+              <div>
+                <strong>Independent Tools</strong>
+                Check live risk flags on <a href="https://rugcheck.xyz/tokens/4nBQGUjd3oRSEQCkbRuBVsz1QA2XuJuXJwPWvG5Cpump" target="_blank" rel="noopener noreferrer" style="color: var(--link-color);">RugCheck</a>.
+              </div>
+            </div>
+            <div class="security-item">
+              <span class="icon">🧬</span>
+              <div>
+                <strong>The OG Token</strong>
+                First SAME on Solana. Everything else is a copy.
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="how-to-buy">
+          <div class="how-to-title">How to Buy $SAME</div>
+          <ol class="steps-list">
+            <li>Get a Solana wallet like <a href="https://phantom.app/" target="_blank" rel="noopener noreferrer" style="color: var(--link-color);">Phantom</a> or <a href="https://solflare.com/" target="_blank" rel="noopener noreferrer" style="color: var(--link-color);">Solflare</a>.</li>
+            <li>Fund your wallet with SOL from an exchange (Coinbase, Binance, etc.).</li>
+            <li>Go to <a href="https://pump.fun/4nBQGUjd3oRSEQCkbRuBVsz1QA2XuJuXJwPWvG5Cpump" target="_blank" rel="noopener noreferrer" style="color: var(--link-color);">Pump.fun</a> and connect your wallet.</li>
+            <li>Enter the amount of SOL you want to swap for $SAME.</li>
+            <li>Confirm the transaction and welcome to the OG $SAME community.</li>
+          </ol>
         </div>
       </div>
 
@@ -693,11 +1114,11 @@
         </p>
         <ul class="list">
           <li>Multiple tokens with the <strong>same ticker</strong> &amp; <strong>same logo</strong>.</li>
-          <li>New traders grab the wrong chart. “Ever been rugged?” <strong>Same.</strong></li>
+          <li>New traders grab the wrong chart. "Ever been rugged?" <strong>Same.</strong></li>
           <li>
             <strong>$SAME</strong> is the OG. Everything else is a vamp.<br />
-            <em>“The OG always wins.” – Pumpfun</em><br />
-            <em>“Send the vamp to 0.”</em>
+            <em>"The OG always wins." – Pumpfun</em><br />
+            <em>"Send the vamp to 0."</em>
           </li>
         </ul>
       </aside>
@@ -730,9 +1151,49 @@
       <div id="resultsContainer"></div>
     </section>
 
+    <!-- COMMUNITY SECTION -->
+    <section class="community">
+      <h3>Join the $SAME Community</h3>
+      <div class="social-links">
+        <a
+          href="https://x.com/i/communities/1989835044551119209"
+          class="btn-social"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <span>🐦</span> X Community
+        </a>
+        <a
+          href="https://x.com/search?q=%24SAME%20pumpfun&src=typed_query"
+          class="btn-social"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <span>🔍</span> Search $SAME
+        </a>
+      </div>
+
+      <div class="share-section">
+        <p>Help spread the word about the OG $SAME:</p>
+        <div class="share-buttons">
+          <a
+            href="https://twitter.com/intent/tweet?text=Check%20out%20%24SAME%20-%20The%20OG%20SAME%20coin%20on%20Solana!%20%F0%9F%A7%AC&url=https://yoursite.com"
+            class="share-btn"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <span>🐦</span> Share on X
+          </a>
+          <button class="share-btn" id="copyLinkBtn">
+            <span>🔗</span> Copy Link
+          </button>
+        </div>
+      </div>
+    </section>
+
     <footer>
-      <span>Not financial advice. Memes on a blockchain.</span>
-      <span>Built for $SAME • 100% front-end, open data.</span>
+      <span>Not financial advice. Memes on a blockchain. DYOR.</span>
+      <span>Built for $SAME • 100% front-end, open data • <a href="https://solscan.io/token/4nBQGUjd3oRSEQCkbRuBVsz1QA2XuJuXJwPWvG5Cpump" target="_blank" rel="noopener noreferrer">View on Solscan</a></span>
     </footer>
   </div>
 
@@ -755,16 +1216,32 @@
     const sameVolEl = document.getElementById("sameVol");
     const sameStatsFoot = document.getElementById("sameStatsFoot");
 
+    const copyLinkBtn = document.getElementById("copyLinkBtn");
+
     const SAME_CA = "4nBQGUjd3oRSEQCkbRuBVsz1QA2XuJuXJwPWvG5Cpump";
-    const CACHE_KEY = 'sameStatsCache';
-    const CACHE_EXPIRY = 300000; // 5 minutes in ms
+    const CACHE_KEY = "sameStatsCache";
+    const CACHE_EXPIRY = 300000; // 5 minutes
 
     /* ---- Copy CA ---- */
     copyButton.addEventListener("click", async () => {
       try {
         await navigator.clipboard.writeText(caText.textContent.trim());
-        copyButton.textContent = "Copied";
-        setTimeout(() => (copyButton.textContent = "Copy"), 1200);
+        copyButton.textContent = "Copied ✓";
+        setTimeout(() => (copyButton.textContent = "Copy"), 2000);
+      } catch (e) {
+        console.error(e);
+        copyButton.textContent = "Failed";
+        setTimeout(() => (copyButton.textContent = "Copy"), 2000);
+      }
+    });
+
+    /* ---- Copy Link ---- */
+    copyLinkBtn.addEventListener("click", async () => {
+      try {
+        await navigator.clipboard.writeText(window.location.href);
+        const originalHTML = copyLinkBtn.innerHTML;
+        copyLinkBtn.innerHTML = "<span>✓</span> Copied!";
+        setTimeout(() => (copyLinkBtn.innerHTML = originalHTML), 2000);
       } catch (e) {
         console.error(e);
       }
@@ -803,22 +1280,21 @@
           "Connected: " + pubkey.slice(0, 4) + "…" + pubkey.slice(-4),
           "ok"
         );
-        walletButtonLabel.textContent = "Wallet Connected";
+        walletButtonLabel.textContent = "Wallet Connected ✓";
       } catch (err) {
         console.error(err);
         setWalletStatus("Wallet connection rejected.", "err");
       }
     });
 
-    // Add disconnect listener if supported
-    if (window.solana) {
-      window.solana.on('disconnect', () => {
+    if (window.solana && typeof window.solana.on === "function") {
+      window.solana.on("disconnect", () => {
         setWalletStatus("Wallet disconnected.", "err");
         walletButtonLabel.textContent = "Connect Wallet";
       });
     }
 
-    /* ---- Formatting helpers ---- */
+    /* ---- Helpers ---- */
     function formatDate(timestampMs) {
       if (!timestampMs) return "–";
       const d = new Date(timestampMs);
@@ -834,34 +1310,52 @@
       return "$" + (num / 1_000_000).toFixed(1) + "m";
     }
 
-    /* ---- $SAME live stats via DexScreener tokens endpoint ----
-       https://api.dexscreener.com/tokens/v1/solana/{tokenAddresses}
-    */
-    async function fetchSameStats() {
-      // Check cache first
-      const cache = JSON.parse(localStorage.getItem(CACHE_KEY));
-      if (cache && Date.now() - cache.timestamp < CACHE_EXPIRY) {
-        samePriceEl.textContent = cache.price;
-        sameMcEl.textContent = cache.mc;
-        sameLiqEl.textContent = cache.liq;
-        sameVolEl.textContent = cache.vol;
-        sameStatsFoot.textContent = "Cached data (refresh page for latest).";
-        return;
+    function getTimeAgo(timestamp) {
+      const seconds = Math.floor((Date.now() - timestamp) / 1000);
+      if (seconds < 60) return seconds + "s ago";
+      const minutes = Math.floor(seconds / 60);
+      if (minutes < 60) return minutes + "m ago";
+      const hours = Math.floor(minutes / 60);
+      if (hours < 48) return hours + "h ago";
+      const days = Math.floor(hours / 24);
+      return days + "d ago";
+    }
+
+    /* ---- $SAME stats via DexScreener ---- */
+    async function fetchSameStats(forceRefresh = false) {
+      if (!forceRefresh) {
+        const cached = localStorage.getItem(CACHE_KEY);
+        if (cached) {
+          try {
+            const cache = JSON.parse(cached);
+            if (cache && Date.now() - cache.timestamp < CACHE_EXPIRY) {
+              samePriceEl.textContent = cache.price;
+              sameMcEl.textContent = cache.mc;
+              sameLiqEl.textContent = cache.liq;
+              sameVolEl.textContent = cache.vol;
+              const timeAgo = getTimeAgo(cache.timestamp);
+              sameStatsFoot.innerHTML = `Cached data (${timeAgo}) <button class="refresh-btn" id="refreshStats" title="Refresh stats">🔄</button>`;
+              attachRefreshListener();
+              return;
+            }
+          } catch (e) {
+            console.error("Cache parse error:", e);
+          }
+        }
       }
 
       try {
-        const url =
-          "https://api.dexscreener.com/tokens/v1/solana/" + SAME_CA;
+        const url = "https://api.dexscreener.com/tokens/v1/solana/" + SAME_CA;
         const res = await fetch(url);
         if (!res.ok) throw new Error(`HTTP ${res.status}: ${res.statusText}`);
         const data = await res.json();
         const entry = Array.isArray(data) ? data[0] : null;
         if (!entry || !Array.isArray(entry.pairs) || !entry.pairs.length) {
-          sameStatsFoot.textContent = "No pair data found yet.";
+          sameStatsFoot.innerHTML = 'No pair data found yet. <button class="refresh-btn" id="refreshStats" title="Refresh stats">🔄</button>';
+          attachRefreshListener();
           return;
         }
 
-        // Choose pair with highest liquidity as main reference
         const bestPair = entry.pairs.reduce((best, p) => {
           const liq = p.liquidity && typeof p.liquidity.usd === "number"
             ? p.liquidity.usd
@@ -874,7 +1368,8 @@
         }, null);
 
         if (!bestPair) {
-          sameStatsFoot.textContent = "No pair data found yet.";
+          sameStatsFoot.innerHTML = 'No pair data found yet. <button class="refresh-btn" id="refreshStats" title="Refresh stats">🔄</button>';
+          attachRefreshListener();
           return;
         }
 
@@ -892,8 +1387,8 @@
             ? bestPair.volume.h24
             : null;
 
-        const formattedPrice = priceUsd !== null ? formatUsd(priceUsd) : "--";
-        const formattedMc = fdv !== null ? formatUsd(fdv) : marketCap !== null ? formatUsd(marketCap) : "--";
+        const formattedPrice = priceUsd !== null ? formatUsd(priceUsd) : "–";
+        const formattedMc = fdv !== null ? formatUsd(fdv) : marketCap !== null ? formatUsd(marketCap) : "–";
         const formattedLiq = formatUsd(liqUsd);
         const formattedVol = formatUsd(vol24);
 
@@ -902,11 +1397,12 @@
         sameLiqEl.textContent = formattedLiq;
         sameVolEl.textContent = formattedVol;
 
-        sameStatsFoot.textContent = "Data updates live from DexScreener.";
+        const now = Date.now();
+        sameStatsFoot.innerHTML = `Live data from DexScreener (just now) <button class="refresh-btn" id="refreshStats" title="Refresh stats">🔄</button>`;
+        attachRefreshListener();
 
-        // Cache the formatted data
         localStorage.setItem(CACHE_KEY, JSON.stringify({
-          timestamp: Date.now(),
+          timestamp: now,
           price: formattedPrice,
           mc: formattedMc,
           liq: formattedLiq,
@@ -914,50 +1410,47 @@
         }));
       } catch (err) {
         console.error(err);
-        sameStatsFoot.textContent = "Failed to load stats: " + (err.message || "Network error. Retry in a moment.");
+        sameStatsFoot.innerHTML = `Failed to load stats: ${err.message || "Network error. Try again."} <button class="refresh-btn" id="refreshStats" title="Refresh stats">🔄</button>`;
+        attachRefreshListener();
+      }
+    }
+
+    function attachRefreshListener() {
+      const btn = document.getElementById("refreshStats");
+      if (btn) {
+        btn.addEventListener("click", async () => {
+          btn.classList.add("spinning");
+          await fetchSameStats(true);
+          setTimeout(() => btn.classList.remove("spinning"), 900);
+        });
       }
     }
 
     fetchSameStats();
 
-    /* ---- Scanner helpers ---- */
-
+    /* ---- Scanner ---- */
     function setScanStatus(text, type) {
       scanStatus.textContent = text;
       scanStatus.classList.remove("ok", "err");
       if (type) scanStatus.classList.add(type);
     }
 
-    /* 
-      MAIN: Search all pairs matching ticker using DexScreener.
-
-      Docs: https://api.dexscreener.com/latest/dex/search?q=<query>
-
-      We:
-      - Query "<TICKER>"
-      - Filter to chainId === "solana" and baseToken.symbol === ticker
-      - Group by baseToken.address (token)
-      - For each token, keep earliest pairCreatedAt and best liquidity + best mc
-      - Sort by earliest pairCreatedAt (OG first)
-    */
     tickerForm.addEventListener("submit", async (e) => {
       e.preventDefault();
-      const raw = tickerInput.value.trim().replace(/[^a-zA-Z0-9]/g, '');
+      const raw = tickerInput.value.trim().replace(/[^a-zA-Z0-9]/g, "");
       if (!raw || raw.length > 20) {
-        setScanStatus("Invalid ticker: Use letters/numbers only, up to 20 chars.", "err");
+        setScanStatus("Invalid ticker: use letters/numbers only, up to 20 chars.", "err");
         resultsContainer.innerHTML = "";
         return;
       }
       const ticker = raw.toUpperCase();
 
       setScanStatus("Scanning DexScreener for $" + ticker + " on Solana…");
-
       resultsContainer.innerHTML = "";
 
       try {
         const query = encodeURIComponent(ticker);
-        const url =
-          "https://api.dexscreener.com/latest/dex/search?q=" + query;
+        const url = "https://api.dexscreener.com/latest/dex/search?q=" + query;
 
         const res = await fetch(url);
         if (!res.ok) {
@@ -984,7 +1477,6 @@
           return;
         }
 
-        // Group by base token address
         const byToken = new Map();
         for (const p of filtered) {
           const addr = p.baseToken.address;
@@ -1048,7 +1540,6 @@
           "ok"
         );
 
-        // Build table HTML
         let html = '<div class="results-table-wrapper">';
         html += "<table><thead><tr>";
         html += "<th scope='col'>#</th>";
@@ -1064,6 +1555,8 @@
           const isOg = idx === 0;
           const birdeyeUrl =
             "https://birdeye.so/token/" + t.tokenAddress + "?chain=solana";
+          const solscanUrl =
+            "https://solscan.io/token/" + t.tokenAddress;
           const dsUrl = t.url || "#";
 
           html += "<tr>";
@@ -1075,11 +1568,11 @@
           html +=
             "<td>" +
             (t.name || "Unknown") +
-            "<br/><span style='font-size:11px;color:#9ca3af;'>$" +
+            "<br/><span style='font-size:11px;color:var(--text-tertiary);'>$" +
             (t.symbol || "") +
             "</span></td>";
           html +=
-            '<td class="mono" style="max-width:220px;">' +
+            '<td class="mono" style="max-width:220px; word-break: break-all;">' +
             t.tokenAddress +
             "</td>";
           html += "<td>" + formatDate(t.earliestCreatedAt) + "</td>";
@@ -1092,17 +1585,19 @@
             '" target="_blank" rel="noopener noreferrer">Chart</a><br/>';
           html +=
             '<a class="link-small" href="' +
+            solscanUrl +
+            '" target="_blank" rel="noopener noreferrer">Solscan</a><br/>';
+          html +=
+            '<a class="link-small" href="' +
             birdeyeUrl +
-            '" target="_blank" rel="noopener noreferrer">Holders</a>';
+            '" target="_blank" rel="noopener noreferrer">Birdeye</a>';
           html += "</td>";
           html += "</tr>";
         });
 
         html += "</tbody></table></div>";
-
-        // Small summary line under table
         html +=
-          '<div style="font-size:11px;color:#e5e7eb;margin-top:6px;">' +
+          '<div style="font-size:11px;color:var(--text-secondary);margin-top:6px;">' +
           (cloneCount > 0
             ? cloneCount +
               " clone" +
@@ -1121,12 +1616,6 @@
         resultsContainer.innerHTML = "";
       }
     });
-
-    /* 
-      NOTE: Live holder counts via API (for all rows) require a paid / API-key
-      service (e.g. Birdeye) and a backend to keep the key private. This site
-      stays 100% static and free, so we link to Birdeye for deeper holder views.
-    */
   </script>
 </body>
 </html>
