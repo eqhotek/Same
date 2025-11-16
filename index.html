@@ -991,7 +991,7 @@
         </div>
 
         <div id="walletStatus" class="status" role="status">
-          Web3: looking for a Solana wallet (Phantom, Solflare, etc.)…
+          Optional: install Phantom / Solflare to connect your wallet.
         </div>
 
         <div class="token-card">
@@ -1130,7 +1130,7 @@
         <div class="scanner-title">$SAME Scanner – Clone Detector</div>
         <div class="scanner-sub">
           Type any <strong>ticker</strong> to see Solana tokens using that symbol,
-          sorted by <strong>pair creation time</strong>. OG at the top, vamps below.
+          filtered by <strong>real volume & liquidity</strong>. OG at the top, vamps below.
         </div>
       </div>
 
@@ -1145,7 +1145,7 @@
       </form>
 
       <div id="scanStatus" class="scanner-status" role="status">
-        Powered by public DexScreener API. No backend. No KYC.
+        Powered by DexScreener API. Filters out illiquid, zero-volume junk by default.
       </div>
 
       <div id="resultsContainer"></div>
@@ -1197,7 +1197,6 @@
     </footer>
   </div>
 
-  <!-- Simple Solana Web3 + DexScreener integration -->
   <script>
     const walletButton = document.getElementById("walletButton");
     const walletButtonLabel = document.getElementById("walletButtonLabel");
@@ -1215,12 +1214,14 @@
     const sameLiqEl = document.getElementById("sameLiq");
     const sameVolEl = document.getElementById("sameVol");
     const sameStatsFoot = document.getElementById("sameStatsFoot");
-
     const copyLinkBtn = document.getElementById("copyLinkBtn");
 
     const SAME_CA = "4nBQGUjd3oRSEQCkbRuBVsz1QA2XuJuXJwPWvG5Cpump";
     const CACHE_KEY = "sameStatsCache";
     const CACHE_EXPIRY = 300000; // 5 minutes
+
+    const MIN_LIQ_UID = 500;  // min liquidity USD for scanner
+    const MIN_VOL_24H = 500;  // min 24h volume USD for scanner
 
     /* ---- Copy CA ---- */
     copyButton.addEventListener("click", async () => {
@@ -1254,22 +1255,24 @@
     }
 
     /* ---- Wallet detection ---- */
-    const hasSolana = typeof window !== "undefined" && window.solana;
+    const hasSolana =
+      typeof window !== "undefined" &&
+      window.solana &&
+      (window.solana.isPhantom || window.solana.isSolflare || true);
 
-    if (!hasSolana) {
-      setWalletStatus(
-        "No Solana wallet detected. Install Phantom, Solflare, or another Solana wallet.",
-        "err"
-      );
-      walletButtonLabel.textContent = "Get Wallet";
-    } else {
+    // Neutral message on load; don't scream red error just because no wallet is installed.
+    if (hasSolana) {
       setWalletStatus("Wallet ready. Connect to vibe with $SAME.", "ok");
       walletButtonLabel.textContent = "Connect Wallet";
+    } else {
+      setWalletStatus("Optional: install Phantom / Solflare to connect your wallet.", null);
+      walletButtonLabel.textContent = "Get Wallet";
     }
 
     walletButton.addEventListener("click", async () => {
       if (!hasSolana) {
         window.open("https://phantom.app/", "_blank", "noopener");
+        setWalletStatus("No Solana wallet detected. Install Phantom, then reconnect.", "err");
         return;
       }
       try {
@@ -1321,7 +1324,7 @@
       return days + "d ago";
     }
 
-    /* ---- $SAME stats via DexScreener ---- */
+    /* ---- $SAME stats via DexScreener (using search by CA) ---- */
     async function fetchSameStats(forceRefresh = false) {
       if (!forceRefresh) {
         const cached = localStorage.getItem(CACHE_KEY);
@@ -1345,39 +1348,45 @@
       }
 
       try {
-        const url = "https://api.dexscreener.com/tokens/v1/solana/" + SAME_CA;
+        // Use search endpoint by CA, then filter for our token.
+        const q = encodeURIComponent(SAME_CA);
+        const url = "https://api.dexscreener.com/latest/dex/search?q=" + q;
         const res = await fetch(url);
         if (!res.ok) throw new Error(`HTTP ${res.status}: ${res.statusText}`);
         const data = await res.json();
-        const entry = Array.isArray(data) ? data[0] : null;
-        if (!entry || !Array.isArray(entry.pairs) || !entry.pairs.length) {
-          sameStatsFoot.innerHTML = 'No pair data found yet. <button class="refresh-btn" id="refreshStats" title="Refresh stats">🔄</button>';
+        const pairs = Array.isArray(data.pairs) ? data.pairs : [];
+
+        const ours = pairs.filter(
+          (p) =>
+            p.chainId === "solana" &&
+            p.baseToken &&
+            p.baseToken.address === SAME_CA
+        );
+
+        if (!ours.length) {
+          sameStatsFoot.innerHTML =
+            'No live pair data found yet. <button class="refresh-btn" id="refreshStats" title="Refresh stats">🔄</button>';
           attachRefreshListener();
           return;
         }
 
-        const bestPair = entry.pairs.reduce((best, p) => {
-          const liq = p.liquidity && typeof p.liquidity.usd === "number"
-            ? p.liquidity.usd
-            : 0;
+        const bestPair = ours.reduce((best, p) => {
+          const liq =
+            p.liquidity && typeof p.liquidity.usd === "number"
+              ? p.liquidity.usd
+              : 0;
           if (!best) return p;
-          const bestLiq = best.liquidity && typeof best.liquidity.usd === "number"
-            ? best.liquidity.usd
-            : 0;
+          const bestLiq =
+            best.liquidity && typeof best.liquidity.usd === "number"
+              ? best.liquidity.usd
+              : 0;
           return liq > bestLiq ? p : best;
         }, null);
 
-        if (!bestPair) {
-          sameStatsFoot.innerHTML = 'No pair data found yet. <button class="refresh-btn" id="refreshStats" title="Refresh stats">🔄</button>';
-          attachRefreshListener();
-          return;
-        }
-
         const priceUsd = bestPair.priceUsd ? Number(bestPair.priceUsd) : null;
         const fdv = typeof bestPair.fdv === "number" ? bestPair.fdv : null;
-        const marketCap = typeof bestPair.marketCap === "number"
-          ? bestPair.marketCap
-          : null;
+        const marketCap =
+          typeof bestPair.marketCap === "number" ? bestPair.marketCap : null;
         const liqUsd =
           bestPair.liquidity && typeof bestPair.liquidity.usd === "number"
             ? bestPair.liquidity.usd
@@ -1388,7 +1397,8 @@
             : null;
 
         const formattedPrice = priceUsd !== null ? formatUsd(priceUsd) : "–";
-        const formattedMc = fdv !== null ? formatUsd(fdv) : marketCap !== null ? formatUsd(marketCap) : "–";
+        const formattedMc =
+          fdv !== null ? formatUsd(fdv) : marketCap !== null ? formatUsd(marketCap) : "–";
         const formattedLiq = formatUsd(liqUsd);
         const formattedVol = formatUsd(vol24);
 
@@ -1398,19 +1408,26 @@
         sameVolEl.textContent = formattedVol;
 
         const now = Date.now();
-        sameStatsFoot.innerHTML = `Live data from DexScreener (just now) <button class="refresh-btn" id="refreshStats" title="Refresh stats">🔄</button>`;
+        sameStatsFoot.innerHTML =
+          'Live data from DexScreener (just now) <button class="refresh-btn" id="refreshStats" title="Refresh stats">🔄</button>';
         attachRefreshListener();
 
-        localStorage.setItem(CACHE_KEY, JSON.stringify({
-          timestamp: now,
-          price: formattedPrice,
-          mc: formattedMc,
-          liq: formattedLiq,
-          vol: formattedVol
-        }));
+        localStorage.setItem(
+          CACHE_KEY,
+          JSON.stringify({
+            timestamp: now,
+            price: formattedPrice,
+            mc: formattedMc,
+            liq: formattedLiq,
+            vol: formattedVol,
+          })
+        );
       } catch (err) {
         console.error(err);
-        sameStatsFoot.innerHTML = `Failed to load stats: ${err.message || "Network error. Try again."} <button class="refresh-btn" id="refreshStats" title="Refresh stats">🔄</button>`;
+        sameStatsFoot.innerHTML =
+          "Failed to load stats: " +
+          (err.message || "Network error. Try again.") +
+          ' <button class="refresh-btn" id="refreshStats" title="Refresh stats">🔄</button>';
         attachRefreshListener();
       }
     }
@@ -1439,7 +1456,10 @@
       e.preventDefault();
       const raw = tickerInput.value.trim().replace(/[^a-zA-Z0-9]/g, "");
       if (!raw || raw.length > 20) {
-        setScanStatus("Invalid ticker: use letters/numbers only, up to 20 chars.", "err");
+        setScanStatus(
+          "Invalid ticker: use letters/numbers only, up to 20 chars.",
+          "err"
+        );
         resultsContainer.innerHTML = "";
         return;
       }
@@ -1459,7 +1479,7 @@
         const data = await res.json();
         const pairs = Array.isArray(data.pairs) ? data.pairs : [];
 
-        const filtered = pairs.filter((p) => {
+        const filteredBase = pairs.filter((p) => {
           return (
             p.chainId === "solana" &&
             p.baseToken &&
@@ -1468,9 +1488,24 @@
           );
         });
 
+        // Filter out illiquid / dead tokens
+        const filtered = filteredBase.filter((p) => {
+          const liq =
+            p.liquidity && typeof p.liquidity.usd === "number"
+              ? p.liquidity.usd
+              : 0;
+          const vol24 =
+            p.volume && typeof p.volume.h24 === "number"
+              ? p.volume.h24
+              : 0;
+          return liq >= MIN_LIQ_UID && vol24 >= MIN_VOL_24H;
+        });
+
         if (!filtered.length) {
           setScanStatus(
-            "No Solana pairs found using ticker $" + ticker + ".",
+            "No active Solana pairs using $" +
+              ticker +
+              " with decent liquidity/volume.",
             "err"
           );
           resultsContainer.innerHTML = "";
@@ -1482,14 +1517,16 @@
           const addr = p.baseToken.address;
           const existing = byToken.get(addr);
           const createdAt = p.pairCreatedAt || 0;
-          const liq = p.liquidity && typeof p.liquidity.usd === "number"
-            ? p.liquidity.usd
-            : 0;
-          const mc = typeof p.fdv === "number"
-            ? p.fdv
-            : typeof p.marketCap === "number"
-            ? p.marketCap
-            : null;
+          const liq =
+            p.liquidity && typeof p.liquidity.usd === "number"
+              ? p.liquidity.usd
+              : 0;
+          const mc =
+            typeof p.fdv === "number"
+              ? p.fdv
+              : typeof p.marketCap === "number"
+              ? p.marketCap
+              : null;
 
           if (!existing) {
             byToken.set(addr, {
@@ -1532,11 +1569,11 @@
         setScanStatus(
           "Found " +
             total +
-            " token" +
+            " active token" +
             (total > 1 ? "s" : "") +
-            " using ticker $" +
+            " using $" +
             ticker +
-            " on Solana. OG at the top.",
+            " on Solana (filtered by liq & volume).",
           "ok"
         );
 
@@ -1603,14 +1640,15 @@
               " clone" +
               (cloneCount > 1 ? "s" : "") +
               " detected sharing this ticker. Check creation time, liquidity & market cap before aping."
-            : "No clones detected yet. Ticker looks clean – for now.") +
+            : "No clones detected above the liq/volume filters. Ticker looks clean – for now.") +
           "</div>";
 
         resultsContainer.innerHTML = html;
       } catch (err) {
         console.error(err);
         setScanStatus(
-          "Error talking to DexScreener API: " + (err.message || "Network issue. Try again shortly."),
+          "Error talking to DexScreener API: " +
+            (err.message || "Network issue. Try again shortly."),
           "err"
         );
         resultsContainer.innerHTML = "";
