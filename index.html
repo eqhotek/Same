@@ -15,27 +15,39 @@
     body {
       font-family: system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text",
         "Segoe UI", sans-serif;
-      background: radial-gradient(circle at top, #1f2933, #050816 55%, #000000);
+      /* Sky + cloud vibe */
+      background:
+        radial-gradient(circle at 15% 20%, rgba(255,255,255,0.9) 0, rgba(255,255,255,0) 35%),
+        radial-gradient(circle at 70% 15%, rgba(255,255,255,0.9) 0, rgba(255,255,255,0) 35%),
+        radial-gradient(circle at 40% 35%, rgba(255,255,255,0.8) 0, rgba(255,255,255,0) 40%),
+        linear-gradient(180deg, #93c5fd 0%, #60a5fa 35%, #1d4ed8 70%, #020617 100%);
+      background-attachment: fixed;
       color: #f9fafb;
       min-height: 100vh;
       display: flex;
       align-items: center;
       justify-content: center;
-      padding: 24px;
+      padding: 16px;
     }
 
     .app {
       max-width: 1100px;
       width: 100%;
       border-radius: 24px;
-      padding: 28px 22px 26px;
+      padding: 22px 16px 22px;
       background: rgba(15, 23, 42, 0.92);
-      border: 1px solid rgba(148, 163, 184, 0.35);
-      box-shadow: 0 24px 60px rgba(0, 0, 0, 0.65);
-      backdrop-filter: blur(16px);
+      border: 1px solid rgba(148, 163, 184, 0.45);
+      box-shadow: 0 24px 60px rgba(0, 0, 0, 0.7);
+      backdrop-filter: blur(18px);
     }
 
     @media (min-width: 768px) {
+      .app {
+        padding: 28px 24px 24px;
+      }
+    }
+
+    @media (min-width: 1024px) {
       .app {
         padding: 32px 32px 26px;
       }
@@ -50,7 +62,7 @@
       font-size: 12px;
       text-transform: uppercase;
       letter-spacing: 0.12em;
-      color: #9ca3af;
+      color: #e5e7eb;
     }
 
     .badge {
@@ -58,23 +70,25 @@
       border-radius: 999px;
       border: 1px solid rgba(148, 163, 184, 0.7);
       background: rgba(15, 23, 42, 0.9);
+      color: #9ca3af;
     }
 
     .hero {
       display: grid;
-      grid-template-columns: minmax(0, 3fr);
+      grid-template-columns: minmax(0, 1fr);
       gap: 24px;
     }
 
     @media (min-width: 960px) {
       .hero {
-        grid-template-columns: minmax(0, 3fr) minmax(0, 2fr);
+        grid-template-columns: minmax(0, 3fr) minmax(0, 2.2fr);
         align-items: flex-start;
+        gap: 28px;
       }
     }
 
     .hero-main h1 {
-      font-size: clamp(32px, 5vw, 42px);
+      font-size: clamp(30px, 5vw, 40px);
       line-height: 1.05;
       letter-spacing: -0.04em;
       margin-bottom: 10px;
@@ -283,7 +297,7 @@
     .hero-side {
       border-radius: 18px;
       padding: 16px 16px 14px;
-      background: radial-gradient(circle at top, rgba(55, 65, 81, 0.6), #020617);
+      background: radial-gradient(circle at top, rgba(55, 65, 81, 0.7), #020617);
       border: 1px solid rgba(31, 41, 55, 0.95);
       box-shadow: 0 18px 40px rgba(0, 0, 0, 0.8);
       font-size: 13px;
@@ -301,6 +315,62 @@
       font-size: 13px;
       color: #e5e7eb;
       margin-bottom: 12px;
+    }
+
+    .mono {
+      font-family: ui-monospace, Menlo, Monaco, Consolas, "Liberation Mono",
+        "Courier New", monospace;
+      word-break: break-all;
+    }
+
+    /* $SAME live stats card */
+    .same-stats {
+      margin-top: 14px;
+      padding: 12px 14px;
+      border-radius: 16px;
+      background: radial-gradient(circle at top left, rgba(59,130,246,0.5), rgba(15,23,42,0.95));
+      border: 1px solid rgba(59, 130, 246, 0.8);
+      font-size: 13px;
+    }
+
+    .same-stats-title {
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: #bfdbfe;
+      margin-bottom: 8px;
+    }
+
+    .same-stats-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 8px 16px;
+    }
+
+    @media (min-width: 640px) {
+      .same-stats-grid {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+      }
+    }
+
+    .same-stat-label {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: #9ca3af;
+      margin-bottom: 2px;
+    }
+
+    .same-stat-value {
+      font-size: 13px;
+      font-weight: 500;
+      color: #f9fafb;
+    }
+
+    .same-stats-foot {
+      margin-top: 8px;
+      font-size: 11px;
+      color: #9ca3af;
     }
 
     /* --- SCANNER SECTION --- */
@@ -425,11 +495,6 @@
       background: rgba(15, 23, 42, 0.7);
     }
 
-    .mono {
-      font-family: ui-monospace, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
-      word-break: break-all;
-    }
-
     .pill-og {
       display: inline-flex;
       align-items: center;
@@ -457,7 +522,7 @@
     footer {
       margin-top: 18px;
       font-size: 11px;
-      color: #6b7280;
+      color: #e5e7eb;
       display: flex;
       justify-content: space-between;
       gap: 8px;
@@ -518,8 +583,8 @@
           </a>
 
           <button class="btn btn-wallet" id="walletButton">
-            <span class="icon">🦊</span>
-            Connect Wallet
+            <span class="icon">👻</span>
+            <span id="walletButtonLabel">Connect Wallet</span>
           </button>
 
           <a
@@ -553,6 +618,32 @@
               </div>
             </div>
             <button class="copy-btn" id="copyButton">Copy</button>
+          </div>
+        </div>
+
+        <!-- Live $SAME stats -->
+        <div class="same-stats" id="sameStats">
+          <div class="same-stats-title">$SAME live stats (via DexScreener)</div>
+          <div class="same-stats-grid">
+            <div>
+              <div class="same-stat-label">Price</div>
+              <div class="same-stat-value" id="samePrice">--</div>
+            </div>
+            <div>
+              <div class="same-stat-label">Market cap (fdv)</div>
+              <div class="same-stat-value" id="sameMc">--</div>
+            </div>
+            <div>
+              <div class="same-stat-label">Liquidity</div>
+              <div class="same-stat-value" id="sameLiq">--</div>
+            </div>
+            <div>
+              <div class="same-stat-label">24h Volume</div>
+              <div class="same-stat-value" id="sameVol">--</div>
+            </div>
+          </div>
+          <div class="same-stats-foot" id="sameStatsFoot">
+            Fetching live data…
           </div>
         </div>
 
@@ -606,7 +697,7 @@
       <div class="scanner-header">
         <div class="scanner-title">$SAME Scanner – Clone Detector</div>
         <div class="scanner-sub">
-          Type any <strong>ticker</strong> to see all Solana tokens using that symbol,
+          Type any <strong>ticker</strong> to see Solana tokens using that symbol,
           sorted by <strong>pair creation time</strong>. OG at the top, vamps below.
         </div>
       </div>
@@ -637,6 +728,7 @@
   <!-- Simple Solana Web3 + DexScreener integration -->
   <script>
     const walletButton = document.getElementById("walletButton");
+    const walletButtonLabel = document.getElementById("walletButtonLabel");
     const walletStatus = document.getElementById("walletStatus");
     const caText = document.getElementById("caText");
     const copyButton = document.getElementById("copyButton");
@@ -645,6 +737,14 @@
     const tickerInput = document.getElementById("tickerInput");
     const scanStatus = document.getElementById("scanStatus");
     const resultsContainer = document.getElementById("resultsContainer");
+
+    const samePriceEl = document.getElementById("samePrice");
+    const sameMcEl = document.getElementById("sameMc");
+    const sameLiqEl = document.getElementById("sameLiq");
+    const sameVolEl = document.getElementById("sameVol");
+    const sameStatsFoot = document.getElementById("sameStatsFoot");
+
+    const SAME_CA = "4nBQGUjd3oRSEQCkbRuBVsz1QA2XuJuXJwPWvG5Cpump";
 
     /* ---- Copy CA ---- */
     copyButton.addEventListener("click", async () => {
@@ -671,11 +771,13 @@
 
     if (!hasSolana) {
       setWalletStatus(
-        "No Solana wallet detected. Install Phantom, Solflare, or another Solana wallet to connect.",
+        "No Solana wallet detected. Tap “Get Phantom” to install, then reopen this page in the Phantom browser.",
         "err"
       );
+      walletButtonLabel.textContent = "Get Phantom";
     } else {
       setWalletStatus("Wallet ready. Connect to vibe with $SAME.", "ok");
+      walletButtonLabel.textContent = "Connect Wallet";
     }
 
     walletButton.addEventListener("click", async () => {
@@ -691,21 +793,14 @@
           "Connected: " + pubkey.slice(0, 4) + "…" + pubkey.slice(-4),
           "ok"
         );
-        walletButton.textContent = "Wallet Connected";
+        walletButtonLabel.textContent = "Wallet Connected";
       } catch (err) {
         console.error(err);
         setWalletStatus("Wallet connection rejected.", "err");
       }
     });
 
-    /* ---- Scanner helpers ---- */
-
-    function setScanStatus(text, type) {
-      scanStatus.textContent = text;
-      scanStatus.classList.remove("ok", "err");
-      if (type) scanStatus.classList.add(type);
-    }
-
+    /* ---- Formatting helpers ---- */
     function formatDate(timestampMs) {
       if (!timestampMs) return "–";
       const d = new Date(timestampMs);
@@ -721,16 +816,91 @@
       return "$" + (num / 1_000_000).toFixed(1) + "m";
     }
 
+    /* ---- $SAME live stats via DexScreener tokens endpoint ----
+       https://api.dexscreener.com/tokens/v1/solana/{tokenAddresses}
+    */
+    async function fetchSameStats() {
+      try {
+        const url =
+          "https://api.dexscreener.com/tokens/v1/solana/" + SAME_CA;
+        const res = await fetch(url);
+        if (!res.ok) throw new Error("HTTP " + res.status);
+        const data = await res.json();
+        const entry = Array.isArray(data) ? data[0] : null;
+        if (!entry || !Array.isArray(entry.pairs) || !entry.pairs.length) {
+          sameStatsFoot.textContent = "No pair data found yet.";
+          return;
+        }
+
+        // Choose pair with highest liquidity as main reference
+        const bestPair = entry.pairs.reduce((best, p) => {
+          const liq = p.liquidity && typeof p.liquidity.usd === "number"
+            ? p.liquidity.usd
+            : 0;
+          if (!best) return p;
+          const bestLiq = best.liquidity && typeof best.liquidity.usd === "number"
+            ? best.liquidity.usd
+            : 0;
+          return liq > bestLiq ? p : best;
+        }, null);
+
+        if (!bestPair) {
+          sameStatsFoot.textContent = "No pair data found yet.";
+          return;
+        }
+
+        const priceUsd = bestPair.priceUsd ? Number(bestPair.priceUsd) : null;
+        const fdv = typeof bestPair.fdv === "number" ? bestPair.fdv : null;
+        const marketCap = typeof bestPair.marketCap === "number"
+          ? bestPair.marketCap
+          : null;
+        const liqUsd =
+          bestPair.liquidity && typeof bestPair.liquidity.usd === "number"
+            ? bestPair.liquidity.usd
+            : null;
+        const vol24 =
+          bestPair.volume && typeof bestPair.volume.h24 === "number"
+            ? bestPair.volume.h24
+            : null;
+
+        samePriceEl.textContent =
+          priceUsd !== null ? formatUsd(priceUsd).replace("$", "$") : "--";
+        sameMcEl.textContent =
+          fdv !== null
+            ? formatUsd(fdv)
+            : marketCap !== null
+            ? formatUsd(marketCap)
+            : "--";
+        sameLiqEl.textContent = formatUsd(liqUsd);
+        sameVolEl.textContent = formatUsd(vol24);
+
+        sameStatsFoot.textContent = "Data updates live from DexScreener.";
+      } catch (err) {
+        console.error(err);
+        sameStatsFoot.textContent = "Could not load live stats right now.";
+      }
+    }
+
+    fetchSameStats();
+
+    /* ---- Scanner helpers ---- */
+
+    function setScanStatus(text, type) {
+      scanStatus.textContent = text;
+      scanStatus.classList.remove("ok", "err");
+      if (type) scanStatus.classList.add(type);
+    }
+
     /* 
       MAIN: Search all pairs matching ticker using DexScreener.
 
       Docs: https://api.dexscreener.com/latest/dex/search?q=<query>
 
       We:
-      - Query "<ticker> solana"
+      - Query "<TICKER>"
       - Filter to chainId === "solana" and baseToken.symbol === ticker
       - Group by baseToken.address (token)
-      - For each token, keep earliest pairCreatedAt and best liquidity
+      - For each token, keep earliest pairCreatedAt and best liquidity + best mc
       - Sort by earliest pairCreatedAt (OG first)
     */
     tickerForm.addEventListener("submit", async (e) => {
@@ -743,11 +913,11 @@
       }
       const ticker = raw.toUpperCase();
 
-      setScanStatus("Scanning DexScreener for " + ticker + " on Solana…");
+      setScanStatus("Scanning DexScreener for $" + ticker + " on Solana…");
       resultsContainer.innerHTML = "";
 
       try {
-        const query = encodeURIComponent(ticker + " solana");
+        const query = encodeURIComponent(ticker);
         const url =
           "https://api.dexscreener.com/latest/dex/search?q=" + query;
 
@@ -785,6 +955,11 @@
           const liq = p.liquidity && typeof p.liquidity.usd === "number"
             ? p.liquidity.usd
             : 0;
+          const mc = typeof p.fdv === "number"
+            ? p.fdv
+            : typeof p.marketCap === "number"
+            ? p.marketCap
+            : null;
 
           if (!existing) {
             byToken.set(addr, {
@@ -793,6 +968,7 @@
               symbol: p.baseToken.symbol,
               earliestCreatedAt: createdAt,
               bestLiquidity: liq,
+              bestMc: mc,
               url: p.url,
             });
           } else {
@@ -806,6 +982,12 @@
             }
             if (liq > existing.bestLiquidity) {
               existing.bestLiquidity = liq;
+            }
+            if (
+              mc !== null &&
+              (existing.bestMc === null || mc > existing.bestMc)
+            ) {
+              existing.bestMc = mc;
             }
           }
         }
@@ -836,19 +1018,22 @@
         html += "<th>CA</th>";
         html += "<th>First Pair</th>";
         html += "<th>Liquidity</th>";
+        html += "<th>MC (fdv)</th>";
         html += "<th>Links</th>";
         html += "</tr></thead><tbody>";
 
         tokens.forEach((t, idx) => {
           const isOg = idx === 0;
           const birdeyeUrl =
-            "https://birdeye.so/token/" +
-            t.tokenAddress +
-            "?chain=solana";
+            "https://birdeye.so/token/" + t.tokenAddress + "?chain=solana";
           const dsUrl = t.url || "#";
 
           html += "<tr>";
-          html += "<td>" + (idx + 1) + (isOg ? ' <span class="pill-og">OG</span>' : "") + "</td>";
+          html +=
+            "<td>" +
+            (idx + 1) +
+            (isOg ? ' <span class="pill-og">OG</span>' : "") +
+            "</td>";
           html +=
             "<td>" +
             (t.name || "Unknown") +
@@ -861,6 +1046,7 @@
             "</td>";
           html += "<td>" + formatDate(t.earliestCreatedAt) + "</td>";
           html += "<td>" + formatUsd(t.bestLiquidity) + "</td>";
+          html += "<td>" + (t.bestMc !== null ? formatUsd(t.bestMc) : "–") + "</td>";
           html += "<td>";
           html +=
             '<a class="link-small" href="' +
@@ -878,29 +1064,30 @@
 
         // Small summary line under table
         html +=
-          '<div style="font-size:11px;color:#6b7280;margin-top:6px;">' +
+          '<div style="font-size:11px;color:#e5e7eb;margin-top:6px;">' +
           (cloneCount > 0
             ? cloneCount +
               " clone" +
               (cloneCount > 1 ? "s" : "") +
-              " detected sharing this ticker. Check creation time & holders before aping."
+              " detected sharing this ticker. Check creation time, liquidity & market cap before aping."
             : "No clones detected yet. Ticker looks clean – for now.") +
           "</div>";
 
         resultsContainer.innerHTML = html;
       } catch (err) {
         console.error(err);
-        setScanStatus("Error talking to DexScreener API. Try again shortly.", "err");
+        setScanStatus(
+          "Error talking to DexScreener API. Try again shortly.",
+          "err"
+        );
         resultsContainer.innerHTML = "";
       }
     });
 
     /* 
-      NOTE for future upgrade:
-      If you later want wallet-level holding duration, you’ll need:
-      - A backend that indexes token transfer history, OR
-      - A paid/indexed API (e.g. Birdeye holder + trades endpoints) and NOT expose the key directly.
-      This front-end keeps everything 100% free & static.
+      NOTE: Live holder counts via API (for all rows) require a paid / API-key
+      service (e.g. Birdeye) and a backend to keep the key private. This site
+      stays 100% static and free, so we link to Birdeye for deeper holder views.
     */
   </script>
 </body>
