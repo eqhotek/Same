@@ -5,6 +5,10 @@
   <title>$SAME – The OG SAME Coin</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="description" content="$SAME – the OG SAME coin. Exposing copy-paste tickers and lazy vamps. Ever been rugged? Same." />
+  <link rel="icon" href="https://example.com/favicon.ico" type="image/x-icon">
+  <meta property="og:title" content="$SAME – The OG SAME Coin">
+  <meta property="og:description" content="Exposing copy-paste tickers and lazy vamps. Ever been rugged? Same.">
+  <meta property="og:image" content="https://example.com/og-image.png">
   <style>
     * {
       box-sizing: border-box;
@@ -39,6 +43,12 @@
       border: 1px solid rgba(148, 163, 184, 0.45);
       box-shadow: 0 24px 60px rgba(0, 0, 0, 0.7);
       backdrop-filter: blur(18px);
+      animation: fadeIn 0.5s ease-in;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
     }
 
     @media (min-width: 768px) {
@@ -457,6 +467,7 @@
       border-radius: 12px;
       border: 1px solid rgba(55, 65, 81, 0.9);
       background: rgba(15, 23, 42, 0.85);
+      overflow-x: auto;
     }
 
     table {
@@ -598,7 +609,7 @@
           </a>
         </div>
 
-        <div id="walletStatus" class="status">
+        <div id="walletStatus" class="status" role="status">
           Web3: looking for a Solana wallet (Phantom, Solflare, etc.)…
         </div>
 
@@ -627,19 +638,19 @@
           <div class="same-stats-grid">
             <div>
               <div class="same-stat-label">Price</div>
-              <div class="same-stat-value" id="samePrice">--</div>
+              <div class="same-stat-value" id="samePrice">Loading...</div>
             </div>
             <div>
               <div class="same-stat-label">Market cap (fdv)</div>
-              <div class="same-stat-value" id="sameMc">--</div>
+              <div class="same-stat-value" id="sameMc">Loading...</div>
             </div>
             <div>
               <div class="same-stat-label">Liquidity</div>
-              <div class="same-stat-value" id="sameLiq">--</div>
+              <div class="same-stat-value" id="sameLiq">Loading...</div>
             </div>
             <div>
               <div class="same-stat-label">24h Volume</div>
-              <div class="same-stat-value" id="sameVol">--</div>
+              <div class="same-stat-value" id="sameVol">Loading...</div>
             </div>
           </div>
           <div class="same-stats-foot" id="sameStatsFoot">
@@ -712,7 +723,7 @@
         <button type="submit" class="scanner-btn">Scan Ticker</button>
       </form>
 
-      <div id="scanStatus" class="scanner-status">
+      <div id="scanStatus" class="scanner-status" role="status">
         Powered by public DexScreener API. No backend. No KYC.
       </div>
 
@@ -745,6 +756,8 @@
     const sameStatsFoot = document.getElementById("sameStatsFoot");
 
     const SAME_CA = "4nBQGUjd3oRSEQCkbRuBVsz1QA2XuJuXJwPWvG5Cpump";
+    const CACHE_KEY = 'sameStatsCache';
+    const CACHE_EXPIRY = 300000; // 5 minutes in ms
 
     /* ---- Copy CA ---- */
     copyButton.addEventListener("click", async () => {
@@ -764,17 +777,14 @@
     }
 
     /* ---- Wallet detection ---- */
-    const hasSolana =
-      typeof window !== "undefined" &&
-      window.solana &&
-      window.solana.isPhantom;
+    const hasSolana = typeof window !== "undefined" && window.solana;
 
     if (!hasSolana) {
       setWalletStatus(
-        "No Solana wallet detected. Tap “Get Phantom” to install, then reopen this page in the Phantom browser.",
+        "No Solana wallet detected. Install Phantom, Solflare, or another Solana wallet.",
         "err"
       );
-      walletButtonLabel.textContent = "Get Phantom";
+      walletButtonLabel.textContent = "Get Wallet";
     } else {
       setWalletStatus("Wallet ready. Connect to vibe with $SAME.", "ok");
       walletButtonLabel.textContent = "Connect Wallet";
@@ -800,6 +810,14 @@
       }
     });
 
+    // Add disconnect listener if supported
+    if (window.solana) {
+      window.solana.on('disconnect', () => {
+        setWalletStatus("Wallet disconnected.", "err");
+        walletButtonLabel.textContent = "Connect Wallet";
+      });
+    }
+
     /* ---- Formatting helpers ---- */
     function formatDate(timestampMs) {
       if (!timestampMs) return "–";
@@ -820,11 +838,22 @@
        https://api.dexscreener.com/tokens/v1/solana/{tokenAddresses}
     */
     async function fetchSameStats() {
+      // Check cache first
+      const cache = JSON.parse(localStorage.getItem(CACHE_KEY));
+      if (cache && Date.now() - cache.timestamp < CACHE_EXPIRY) {
+        samePriceEl.textContent = cache.price;
+        sameMcEl.textContent = cache.mc;
+        sameLiqEl.textContent = cache.liq;
+        sameVolEl.textContent = cache.vol;
+        sameStatsFoot.textContent = "Cached data (refresh page for latest).";
+        return;
+      }
+
       try {
         const url =
           "https://api.dexscreener.com/tokens/v1/solana/" + SAME_CA;
         const res = await fetch(url);
-        if (!res.ok) throw new Error("HTTP " + res.status);
+        if (!res.ok) throw new Error(`HTTP ${res.status}: ${res.statusText}`);
         const data = await res.json();
         const entry = Array.isArray(data) ? data[0] : null;
         if (!entry || !Array.isArray(entry.pairs) || !entry.pairs.length) {
@@ -863,21 +892,29 @@
             ? bestPair.volume.h24
             : null;
 
-        samePriceEl.textContent =
-          priceUsd !== null ? formatUsd(priceUsd).replace("$", "$") : "--";
-        sameMcEl.textContent =
-          fdv !== null
-            ? formatUsd(fdv)
-            : marketCap !== null
-            ? formatUsd(marketCap)
-            : "--";
-        sameLiqEl.textContent = formatUsd(liqUsd);
-        sameVolEl.textContent = formatUsd(vol24);
+        const formattedPrice = priceUsd !== null ? formatUsd(priceUsd) : "--";
+        const formattedMc = fdv !== null ? formatUsd(fdv) : marketCap !== null ? formatUsd(marketCap) : "--";
+        const formattedLiq = formatUsd(liqUsd);
+        const formattedVol = formatUsd(vol24);
+
+        samePriceEl.textContent = formattedPrice;
+        sameMcEl.textContent = formattedMc;
+        sameLiqEl.textContent = formattedLiq;
+        sameVolEl.textContent = formattedVol;
 
         sameStatsFoot.textContent = "Data updates live from DexScreener.";
+
+        // Cache the formatted data
+        localStorage.setItem(CACHE_KEY, JSON.stringify({
+          timestamp: Date.now(),
+          price: formattedPrice,
+          mc: formattedMc,
+          liq: formattedLiq,
+          vol: formattedVol
+        }));
       } catch (err) {
         console.error(err);
-        sameStatsFoot.textContent = "Could not load live stats right now.";
+        sameStatsFoot.textContent = "Failed to load stats: " + (err.message || "Network error. Retry in a moment.");
       }
     }
 
@@ -905,15 +942,16 @@
     */
     tickerForm.addEventListener("submit", async (e) => {
       e.preventDefault();
-      const raw = tickerInput.value.trim();
-      if (!raw) {
-        setScanStatus("Enter a ticker to scan (ex: SAME, BONK, PEPE).", "err");
+      const raw = tickerInput.value.trim().replace(/[^a-zA-Z0-9]/g, '');
+      if (!raw || raw.length > 20) {
+        setScanStatus("Invalid ticker: Use letters/numbers only, up to 20 chars.", "err");
         resultsContainer.innerHTML = "";
         return;
       }
       const ticker = raw.toUpperCase();
 
       setScanStatus("Scanning DexScreener for $" + ticker + " on Solana…");
+
       resultsContainer.innerHTML = "";
 
       try {
@@ -923,7 +961,7 @@
 
         const res = await fetch(url);
         if (!res.ok) {
-          throw new Error("HTTP " + res.status);
+          throw new Error(`HTTP ${res.status}: ${res.statusText}`);
         }
         const data = await res.json();
         const pairs = Array.isArray(data.pairs) ? data.pairs : [];
@@ -1013,13 +1051,13 @@
         // Build table HTML
         let html = '<div class="results-table-wrapper">';
         html += "<table><thead><tr>";
-        html += "<th>#</th>";
-        html += "<th>Token</th>";
-        html += "<th>CA</th>";
-        html += "<th>First Pair</th>";
-        html += "<th>Liquidity</th>";
-        html += "<th>MC (fdv)</th>";
-        html += "<th>Links</th>";
+        html += "<th scope='col'>#</th>";
+        html += "<th scope='col'>Token</th>";
+        html += "<th scope='col'>CA</th>";
+        html += "<th scope='col'>First Pair</th>";
+        html += "<th scope='col'>Liquidity</th>";
+        html += "<th scope='col'>MC (fdv)</th>";
+        html += "<th scope='col'>Links</th>";
         html += "</tr></thead><tbody>";
 
         tokens.forEach((t, idx) => {
@@ -1077,7 +1115,7 @@
       } catch (err) {
         console.error(err);
         setScanStatus(
-          "Error talking to DexScreener API. Try again shortly.",
+          "Error talking to DexScreener API: " + (err.message || "Network issue. Try again shortly."),
           "err"
         );
         resultsContainer.innerHTML = "";
