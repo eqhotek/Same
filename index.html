@@ -53,10 +53,10 @@
       background-repeat: no-repeat;
       background-attachment: fixed;
 
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      min-height: 100vh;
+      display: block;
       padding: 16px;
+      overflow-x: hidden;
     }
 
     @media (max-width: 1024px) {
@@ -68,6 +68,7 @@
     .shell {
       max-width: 1280px;
       width: 100%;
+      margin: 0 auto;
     }
 
     .app {
@@ -604,7 +605,7 @@
     }
 
     tbody tr:last-child td { border-bottom:none; }
-    tbody tr:nth-child(even) { background:rgba(15,23,42,0.7); }
+    tbody tr:nth-child(even){ background:rgba(15,23,42,0.7); }
 
     .pill-og {
       display:inline-flex;
@@ -901,7 +902,7 @@
           </div>
         </div>
 
-        <!-- RIGHT: copy-paste problem card -->
+        <!-- RIGHT: copy-paste card -->
         <aside class="hero-side">
           <div class="hero-side-title">The copy-paste problem</div>
           <p class="hero-side-body">
