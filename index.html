@@ -4,22 +4,17 @@
   <meta charset="UTF-8" />
   <title>$SAME – The OG SAME Coin | Solana Meme Token</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="description" content="$SAME – the OG SAME coin on Solana. Exposing copy-paste tickers and lazy vamps. Ever been rugged? Same. Join the original $SAME community." />
-  <meta name="keywords" content="SAME coin, Solana meme coin, crypto scanner, OG SAME, pump.fun, Solana token, meme cryptocurrency">
+  <meta
+    name="description"
+    content="$SAME – the OG SAME coin on Solana. Our scanner helps CT find the original token when tickers and logos are copied. The OG always wins."
+  />
 
   <!-- Favicon -->
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧬</text></svg>" type="image/svg+xml">
-
-  <!-- Open Graph / Social -->
-  <meta property="og:type" content="website">
-  <meta property="og:title" content="$SAME – The OG SAME Coin">
-  <meta property="og:description" content="Exposing copy-paste tickers and lazy vamps. Ever been rugged? Same.">
-  <meta property="og:image" content="https://example.com/og-image.png">
-  <meta property="og:url" content="https://yoursite.com">
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="$SAME – The OG SAME Coin">
-  <meta name="twitter:description" content="The original SAME coin on Solana. Verify before you buy.">
-  <meta name="twitter:image" content="https://example.com/og-image.png">
+  <link
+    rel="icon"
+    href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧬</text></svg>"
+    type="image/svg+xml"
+  />
 
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -29,11 +24,8 @@
       --text-secondary: #e5e7eb;
       --text-tertiary: #9ca3af;
 
-      --card-bg: rgba(15, 23, 42, 0.92);
+      --card-bg: rgba(15, 23, 42, 0.94);
       --card-border: rgba(148, 163, 184, 0.45);
-
-      --pill-bg: rgba(15, 23, 42, 0.9);
-      --pill-border: rgba(148, 163, 184, 0.6);
 
       --status-ok: #4ade80;
       --status-err: #fb7185;
@@ -42,23 +34,35 @@
       --link-hover: #818cf8;
     }
 
+    html, body {
+      height: 100%;
+    }
+
     body {
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text","Segoe UI", sans-serif;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text",
+        "Segoe UI", sans-serif;
       line-height: 1.5;
       color: var(--text-primary);
+      margin: 0;
 
-      /* Seamless sky background – replace with your actual file name */
-      background-image: url("sky-bg.jpg");
-      background-position: center;
+      /* Seamless sky background */
+      background-color: #020617;
+      background-image: url("same-sky-bg.png");
+      background-position: center center;
       background-size: cover;
       background-repeat: no-repeat;
       background-attachment: fixed;
 
-      min-height: 100vh;
       display: flex;
       align-items: center;
       justify-content: center;
       padding: 16px;
+    }
+
+    @media (max-width: 1024px) {
+      body {
+        background-attachment: scroll;
+      }
     }
 
     .shell {
@@ -68,13 +72,17 @@
 
     .app {
       border-radius: 32px;
-      padding: 24px 14px 20px;
-      background: radial-gradient(circle at top left, rgba(148,163,184,0.25), transparent 55%),
-                  radial-gradient(circle at bottom right, rgba(56,189,248,0.25), transparent 50%),
-                  rgba(15, 23, 42, 0.86);
-      border: 1px solid rgba(148, 163, 184, 0.4);
+      padding: 26px 16px 22px;
+      margin: 0 auto;
+
+      background:
+        radial-gradient(circle at top left, rgba(148,163,184,0.18), transparent 55%),
+        radial-gradient(circle at bottom right, rgba(56,189,248,0.2), transparent 55%),
+        rgba(15, 23, 42, 0.88);
+
+      border: 1px solid rgba(148, 163, 184, 0.45);
       box-shadow:
-        0 40px 80px rgba(15, 23, 42, 0.9),
+        0 32px 80px rgba(0, 0, 0, 0.9),
         0 0 0 1px rgba(15, 23, 42, 0.9);
       backdrop-filter: blur(26px);
       animation: fadeIn 0.4s ease-out;
@@ -86,11 +94,11 @@
     }
 
     @media (min-width: 768px) {
-      .app { padding: 32px 28px 26px; }
+      .app { padding: 32px 24px 24px; }
     }
 
     @media (min-width: 1024px) {
-      .app { padding: 36px 32px 28px; }
+      .app { padding: 36px 32px 26px; }
     }
 
     .badge-row {
@@ -117,7 +125,7 @@
       padding: 4px 10px;
       border-radius: 999px;
       border: 1px solid rgba(148, 163, 184, 0.55);
-      background: rgba(15, 23, 42, 0.9);
+      background: rgba(15, 23, 42, 0.96);
       color: #e5e7eb;
     }
 
@@ -130,7 +138,7 @@
     @media (min-width: 980px) {
       .hero {
         grid-template-columns: minmax(0, 3fr) minmax(0, 2.1fr);
-        gap: 32px;
+        gap: 28px;
         align-items: flex-start;
       }
     }
@@ -151,12 +159,12 @@
       width: 72px;
       height: 72px;
       border-radius: 999px;
-      background: radial-gradient(circle at 30% 20%, #ffffff, #020617);
+      background: radial-gradient(circle at 25% 20%, #ffffff, #020617);
       display: flex;
       align-items: center;
       justify-content: center;
       border: 1px solid rgba(148,163,184,0.7);
-      box-shadow: 0 18px 40px rgba(0,0,0,0.8);
+      box-shadow: 0 18px 40px rgba(0,0,0,0.85);
       overflow: hidden;
     }
 
@@ -173,7 +181,8 @@
     }
 
     .hero-highlight {
-      background: linear-gradient(90deg, #4ade80, #a855f7, #22d3ee);
+      display: block;
+      background: linear-gradient(90deg, #22c55e, #a855f7, #22d3ee);
       -webkit-background-clip: text;
       background-clip: text;
       color: transparent;
@@ -185,11 +194,8 @@
       max-width: 560px;
     }
 
-    .hero-sub em {
-      color: #e5e7eb;
-      font-style: italic;
-      font-weight: 500;
-    }
+    .hero-sub strong { color: #f9fafb; }
+    .hero-sub em { color: #e5e7eb; font-style: italic; }
 
     .hero-meme {
       font-size: 14px;
@@ -216,7 +222,8 @@
       gap: 10px;
     }
 
-    button, .btn {
+    button,
+    .btn {
       border: none;
       cursor: pointer;
       border-radius: 999px;
@@ -240,7 +247,7 @@
     .btn-primary:hover { transform: translateY(-1px) scale(1.01); }
 
     .btn-outline {
-      background: rgba(15, 23, 42, 0.95);
+      background: rgba(15, 23, 42, 0.96);
       border: 1px solid rgba(55, 65, 81, 0.9);
       color: var(--text-primary);
     }
@@ -271,10 +278,11 @@
 
     .card {
       border-radius: 22px;
-      padding: 12px 14px;
+      padding: 14px 16px;
       background: var(--card-bg);
       border: 1px solid var(--card-border);
       box-shadow: 0 18px 40px rgba(0, 0, 0, 0.82);
+      margin-top: 16px;
     }
 
     .token-card { margin-top: 16px; }
@@ -296,7 +304,8 @@
 
     .token-value {
       word-break: break-all;
-      font-family: ui-monospace, Menlo, Monaco, Consolas, "Liberation Mono","Courier New", monospace;
+      font-family: ui-monospace, Menlo, Monaco, Consolas,
+        "Liberation Mono","Courier New", monospace;
       font-size: 12px;
       color: var(--text-primary);
     }
@@ -321,8 +330,8 @@
       padding: 12px 14px;
       border-radius: 22px;
       background: radial-gradient(circle at top left, rgba(59,130,246,0.55), rgba(15,23,42,0.98));
-      border: 1px solid rgba(59,130,246,0.9);
-      box-shadow: 0 18px 46px rgba(15, 23, 42, 0.9);
+      border: 1px solid rgba(59, 130, 246, 0.9);
+      box-shadow: 0 18px 46px rgba(0,0,0,0.9);
       font-size: 13px;
     }
 
@@ -385,20 +394,14 @@
     .refresh-btn.spinning { animation: spin 1s linear; }
     @keyframes spin { from{transform:rotate(0)} to{transform:rotate(360deg)} }
 
-    .memes,
-    .verify-block,
-    .security-block,
-    .how-to-buy {
+    .section-block {
       margin-top: 18px;
       padding-top: 14px;
       border-top: 1px dashed rgba(55,65,81,0.9);
       font-size: 13px;
     }
 
-    .memes-title,
-    .verify-title,
-    .security-title,
-    .how-to-title {
+    .section-title {
       font-size: 12px;
       text-transform: uppercase;
       letter-spacing: 0.12em;
@@ -423,6 +426,7 @@
       color: var(--text-tertiary);
       padding-left: 18px;
     }
+
     .list li { margin-bottom: 6px; }
 
     .security-grid {
@@ -438,8 +442,8 @@
       align-items: flex-start;
       padding: 10px;
       border-radius: 16px;
-      background: rgba(15, 23, 42, 0.98);
-      border: 1px solid rgba(55, 65, 81, 0.95);
+      background: rgba(15,23,42,0.98);
+      border: 1px solid rgba(55,65,81,0.95);
     }
 
     .security-item .icon { font-size: 20px; flex-shrink: 0; }
@@ -501,27 +505,40 @@
     }
 
     .mono {
-      font-family: ui-monospace, Menlo, Monaco, Consolas, "Liberation Mono","Courier New", monospace;
+      font-family: ui-monospace, Menlo, Monaco, Consolas,
+        "Liberation Mono","Courier New", monospace;
       word-break: break-all;
     }
 
     /* Scanner */
-    .scanner { margin-top: 28px; padding-top: 20px; border-top: 1px solid rgba(55,65,81,0.9); }
+    .scanner {
+      margin-top: 28px;
+      padding-top: 20px;
+      border-top: 1px solid rgba(55,65,81,0.9);
+    }
 
     .scanner-header {
-      display:flex; flex-wrap:wrap;
+      display:flex;
+      flex-wrap:wrap;
       justify-content:space-between;
-      gap:10px; align-items:baseline;
+      gap:10px;
+      align-items:baseline;
       margin-bottom:10px;
     }
 
     .scanner-title { font-size:16px; font-weight:600; }
-    .scanner-sub { font-size:12px; color:var(--text-tertiary); max-width:440px; }
+    .scanner-sub   { font-size:12px; color:var(--text-tertiary); max-width:440px; }
 
-    .scanner-form { display:flex; flex-wrap:wrap; gap:8px; margin-bottom:12px; }
+    .scanner-form {
+      display:flex;
+      flex-wrap:wrap;
+      gap:8px;
+      margin-bottom:12px;
+    }
 
     .scanner-input {
-      flex:1 1 140px; min-width:0;
+      flex:1 1 140px;
+      min-width:0;
       border-radius:999px;
       border:1px solid rgba(75,85,99,0.9);
       background:rgba(15,23,42,0.98);
@@ -548,7 +565,13 @@
       white-space:nowrap;
     }
 
-    .scanner-status { font-size:12px; color:var(--text-tertiary); min-height:18px; margin-bottom:6px; }
+    .scanner-status {
+      font-size:12px;
+      color:var(--text-tertiary);
+      min-height:18px;
+      margin-bottom:6px;
+    }
+
     .scanner-status.ok  { color:var(--status-ok); }
     .scanner-status.err { color:var(--status-err); }
 
@@ -570,6 +593,7 @@
       text-align:left;
       border-bottom:1px solid rgba(55,65,81,0.95);
     }
+
     th {
       font-weight:500;
       color:var(--text-tertiary);
@@ -578,8 +602,9 @@
       font-size:11px;
       white-space:nowrap;
     }
+
     tbody tr:last-child td { border-bottom:none; }
-    tbody tr:nth-child(even){ background:rgba(15,23,42,0.7); }
+    tbody tr:nth-child(even) { background:rgba(15,23,42,0.7); }
 
     .pill-og {
       display:inline-flex;
@@ -610,12 +635,18 @@
       background:linear-gradient(135deg,rgba(59,130,246,0.3),rgba(168,85,247,0.3));
       border:1px solid rgba(59,130,246,0.8);
       text-align:center;
-      box-shadow:0 20px 40px rgba(0,0,0,0.8);
+      box-shadow:0 20px 40px rgba(0,0,0,0.85);
     }
 
     .community h3 { font-size:18px; margin-bottom:12px; }
 
-    .social-links { display:flex; justify-content:center; gap:12px; flex-wrap:wrap; margin-bottom:14px; }
+    .social-links {
+      display:flex;
+      justify-content:center;
+      gap:12px;
+      flex-wrap:wrap;
+      margin-bottom:14px;
+    }
 
     .btn-social {
       background:rgba(15,23,42,0.98);
@@ -631,10 +662,20 @@
       font-weight:500;
     }
 
-    .share-section { margin-top:10px; padding-top:10px; border-top:1px dashed rgba(55,65,81,0.9); }
+    .share-section {
+      margin-top:10px;
+      padding-top:10px;
+      border-top:1px dashed rgba(55,65,81,0.9);
+    }
+
     .share-section p { font-size:12px; color:var(--text-tertiary); margin-bottom:8px; }
 
-    .share-buttons { display:flex; justify-content:center; gap:8px; flex-wrap:wrap; }
+    .share-buttons {
+      display:flex;
+      justify-content:center;
+      gap:8px;
+      flex-wrap:wrap;
+    }
 
     .share-btn {
       padding:6px 12px;
@@ -665,7 +706,7 @@
     footer a:hover { text-decoration:underline; }
 
     @media (max-width:640px) {
-      .app { padding:24px 18px 20px; }
+      .app { padding:24px 18px 20px; border-radius:24px; }
       .cta-row { flex-direction:column; }
       .btn { width:100%; justify-content:center; }
       .hero-side { order:-1; }
@@ -684,40 +725,43 @@
       </div>
 
       <div class="hero">
-        <!-- LEFT -->
+        <!-- LEFT: hero + stats -->
         <div class="hero-main">
           <div class="logo-wrap">
             <div class="logo-circle">
-              <!-- replace src with your logo file -->
+              <!-- your logo image -->
               <img src="same-coin-logo.png" alt="$SAME logo">
             </div>
             <div>
-              <h1>Same ticker. Same logo.<br><span class="hero-highlight">Not the same coin.</span></h1>
+              <h1>
+                Same ticker. Same logo.
+                <span class="hero-highlight">Not the same coin.</span>
+              </h1>
             </div>
           </div>
 
           <p class="hero-sub">
-            DeFi is flooded with lazy copy-paste "devs" dropping the
-            <strong>same ticker, same photo, same everything</strong>.
-            It's meme-level copyright infringement on repeat – and people
-            keep grabbing the wrong bag.
-            <br><br>
-            <strong>$SAME</strong> is the <u>original</u> SAME coin on Solana.
-            The OG. The one Pumpfun meant when they said:
-            <em>"the OG always wins"</em> and <em>"send the vamp to 0."</em>
+            <strong>$SAME</strong> is the original SAME coin on Solana.
+            Our tech scans tickers, filters out dead copies, and points CT
+            straight at the <strong>OG token</strong> – so you stop buying the wrong bag.
           </p>
 
           <p class="hero-meme">
             <span class="meme-pill">
               <span>🧬</span>
-              "Same ticker, different devs. Verify the OG."
+              "The OG always wins. Bag the OG."
             </span>
           </p>
 
           <div class="cta-row">
-            <a class="btn btn-primary" target="_blank" rel="noopener noreferrer"
-               href="https://pump.fun/4nBQGUjd3oRSEQCkbRuBVsz1QA2XuJuXJwPWvG5Cpump">
-              <span class="icon">⚡</span> Trade $SAME on Pump.fun
+            <a
+              class="btn btn-primary"
+              target="_blank"
+              rel="noopener noreferrer"
+              href="https://pump.fun/4nBQGUjd3oRSEQCkbRuBVsz1QA2XuJuXJwPWvG5Cpump"
+            >
+              <span class="icon">⚡</span>
+              Trade $SAME on Pump.fun
             </a>
 
             <button class="btn btn-wallet" id="walletButton">
@@ -725,9 +769,9 @@
               <span id="walletButtonLabel">Connect Wallet</span>
             </button>
 
-            <a class="btn btn-outline" target="_blank" rel="noopener noreferrer"
-               href="https://dexscreener.com/solana/4nBQGUjd3oRSEQCkbRuBVsz1QA2XuJuXJwPWvG5C">
-              <span class="icon">📊</span> View Chart
+            <a class="btn btn-outline" href="#scanner">
+              <span class="icon">🛰️</span>
+              Use SAME Scanner
             </a>
           </div>
 
@@ -735,6 +779,7 @@
             Optional: install Phantom / Solflare to connect your wallet.
           </div>
 
+          <!-- TOKEN + CA -->
           <div class="token-card card">
             <div class="token-row">
               <div>
@@ -753,6 +798,7 @@
             </div>
           </div>
 
+          <!-- LIVE STATS -->
           <div class="same-stats">
             <div class="same-stats-title">$SAME live stats (via DexScreener)</div>
             <div class="same-stats-grid">
@@ -778,8 +824,9 @@
             </div>
           </div>
 
-          <div class="memes">
-            <div class="memes-title">Meme energy</div>
+          <!-- MEMES -->
+          <div class="section-block">
+            <div class="section-title">Meme energy</div>
             <div class="meme-grid">
               <span class="meme-tag">"Ever been rugged? Same."</span>
               <span class="meme-tag">"Buy the SAME coin."</span>
@@ -790,35 +837,42 @@
             </div>
           </div>
 
-          <div class="verify-block">
-            <div class="verify-title">Verify You're in the OG $SAME</div>
+          <!-- VERIFY -->
+          <div class="section-block">
+            <div class="section-title">Verify you're in the OG $SAME</div>
             <ul class="list">
               <li>Check the <strong>contract address</strong> matches exactly:</li>
-              <li class="mono" style="margin-top:4px;">4nBQGUjd3oRSEQCkbRuBVsz1QA2XuJuXJwPWvG5C</li>
+              <li class="mono" style="margin-top:4px;">
+                4nBQGUjd3oRSEQCkbRuBVsz1QA2XuJuXJwPWvG5C
+              </li>
               <li style="margin-top:6px;">If the ticker is $SAME but the CA is different, it's a clone.</li>
               <li>Same art + different contract = <strong>vamp</strong>, not OG.</li>
-              <li>Always verify on
-                <a href="https://solscan.io/token/4nBQGUjd3oRSEQCkbRuBVsz1QA2XuJuXJwPWvG5C" target="_blank" rel="noopener noreferrer" style="color:var(--link-color);">Solscan</a>
+              <li>
+                Always verify on
+                <a href="https://solscan.io/token/4nBQGUjd3oRSEQCkbRuBVsz1QA2XuJuXJwPWvG5C"
+                   target="_blank" rel="noopener noreferrer" style="color:var(--link-color);">Solscan</a>
                 or
-                <a href="https://birdeye.so/token/4nBQGUjd3oRSEQCkbRuBVsz1QA2XuJuXJwPWvG5C?chain=solana" target="_blank" rel="noopener noreferrer" style="color:var(--link-color);">Birdeye</a>.
+                <a href="https://birdeye.so/token/4nBQGUjd3oRSEQCkbRuBVsz1QA2XuJuXJwPWvG5C?chain=solana"
+                   target="_blank" rel="noopener noreferrer" style="color:var(--link-color);">Birdeye</a>.
               </li>
             </ul>
           </div>
 
-          <div class="security-block">
-            <div class="security-title">Security & Transparency</div>
+          <!-- SECURITY -->
+          <div class="section-block">
+            <div class="section-title">Security & transparency</div>
             <div class="security-grid">
               <div class="security-item">
                 <span class="icon">🔒</span>
                 <div>
-                  <strong>Contract Visibility</strong>
+                  <strong>Contract visibility</strong>
                   Original Pump.fun deployment. Always verify contract before buying.
                 </div>
               </div>
               <div class="security-item">
                 <span class="icon">✅</span>
                 <div>
-                  <strong>Independent Tools</strong>
+                  <strong>Independent tools</strong>
                   Check live risk flags on
                   <a href="https://rugcheck.xyz/tokens/4nBQGUjd3oRSEQCkbRuBVsz1QA2XuJuXJwPWvG5C"
                      target="_blank" rel="noopener noreferrer" style="color:var(--link-color);">RugCheck</a>.
@@ -827,15 +881,16 @@
               <div class="security-item">
                 <span class="icon">🧬</span>
                 <div>
-                  <strong>The OG Token</strong>
+                  <strong>The OG token</strong>
                   First SAME on Solana. Everything else is a copy.
                 </div>
               </div>
             </div>
           </div>
 
-          <div class="how-to-buy">
-            <div class="how-to-title">How to Buy $SAME</div>
+          <!-- HOW TO BUY -->
+          <div class="section-block">
+            <div class="section-title">How to buy $SAME</div>
             <ol class="steps-list">
               <li>Get a Solana wallet like <a href="https://phantom.app/" target="_blank" rel="noopener noreferrer" style="color:var(--link-color);">Phantom</a> or <a href="https://solflare.com/" target="_blank" rel="noopener noreferrer" style="color:var(--link-color);">Solflare</a>.</li>
               <li>Fund your wallet with SOL from an exchange (Coinbase, Binance, etc.).</li>
@@ -846,9 +901,9 @@
           </div>
         </div>
 
-        <!-- RIGHT NARRATIVE -->
+        <!-- RIGHT: copy-paste problem card -->
         <aside class="hero-side">
-          <div class="hero-side-title">The Copy-Paste Problem</div>
+          <div class="hero-side-title">The copy-paste problem</div>
           <p class="hero-side-body">
             Everyone wants the shortcut: copy the ticker, steal the art,
             slap it on a new contract and hope exit liquidity shows up.
@@ -867,17 +922,23 @@
       </div>
 
       <!-- SCANNER -->
-      <section class="scanner">
+      <section class="scanner" id="scanner">
         <div class="scanner-header">
-          <div class="scanner-title">$SAME Scanner – Clone Detector</div>
+          <div class="scanner-title">$SAME Scanner – Find the OG</div>
           <div class="scanner-sub">
-            Type any <strong>ticker</strong> to see Solana tokens using that symbol,
-            filtered by <strong>real volume &amp; liquidity</strong>. OG at the top, vamps below.
+            Type any <strong>ticker</strong>. We pull active Solana tokens using that symbol,
+            filter out dead charts, sort by age &amp; liquidity, and point CT toward the
+            <strong>likely OG coin</strong>.
           </div>
         </div>
 
         <form id="tickerForm" class="scanner-form">
-          <input id="tickerInput" class="scanner-input" placeholder="Ex: SAME, PEPE, BONK…" autocomplete="off">
+          <input
+            id="tickerInput"
+            class="scanner-input"
+            placeholder="Ex: SAME, PEPE, BONK…"
+            autocomplete="off"
+          />
           <button type="submit" class="scanner-btn">Scan Ticker</button>
         </form>
 
@@ -890,12 +951,22 @@
 
       <!-- COMMUNITY -->
       <section class="community">
-        <h3>Join the $SAME Community</h3>
+        <h3>Join the $SAME community</h3>
         <div class="social-links">
-          <a href="https://x.com/i/communities/1989835044551119209" class="btn-social" target="_blank" rel="noopener noreferrer">
+          <a
+            href="https://x.com/i/communities/1989835044551119209"
+            class="btn-social"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
             <span>🐦</span> X Community
           </a>
-          <a href="https://x.com/search?q=%24SAME%20pumpfun&src=typed_query" class="btn-social" target="_blank" rel="noopener noreferrer">
+          <a
+            href="https://x.com/search?q=%24SAME%20pumpfun&src=typed_query"
+            class="btn-social"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
             <span>🔍</span> Search $SAME
           </a>
         </div>
@@ -903,8 +974,12 @@
         <div class="share-section">
           <p>Help spread the word about the OG $SAME:</p>
           <div class="share-buttons">
-            <a href="https://twitter.com/intent/tweet?text=Check%20out%20%24SAME%20-%20The%20OG%20SAME%20coin%20on%20Solana!%20%F0%9F%A7%AC&url=https://yoursite.com"
-               class="share-btn" target="_blank" rel="noopener noreferrer">
+            <a
+              href="https://twitter.com/intent/tweet?text=CT%2C%20stop%20buying%20the%20wrong%20bag.%20Use%20the%20SAME%20scanner%20to%20find%20the%20OG%20token%20%E2%80%93%20and%20then%20just%20buy%20the%20SAME%20coin.%20%F0%9F%A7%AC&url=https://yoursite.com"
+              class="share-btn"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
               <span>🐦</span> Share on X
             </a>
             <button class="share-btn" id="copyLinkBtn">
@@ -916,8 +991,13 @@
 
       <footer>
         <span>Not financial advice. Memes on a blockchain. DYOR.</span>
-        <span>Built for $SAME • 100% front-end, open data •
-          <a href="https://solscan.io/token/4nBQGUjd3oRSEQCkbRuBVsz1QA2XuJuXJwPWvG5C" target="_blank" rel="noopener noreferrer">View on Solscan</a>
+        <span>
+          Built for $SAME • 100% front-end, open data •
+          <a
+            href="https://solscan.io/token/4nBQGUjd3oRSEQCkbRuBVsz1QA2XuJuXJwPWvG5C"
+            target="_blank"
+            rel="noopener noreferrer"
+          >View on Solscan</a>
         </span>
       </footer>
     </div>
@@ -1048,7 +1128,8 @@
               sameMcEl.textContent = c.mc;
               sameLiqEl.textContent = c.liq;
               sameVolEl.textContent = c.vol;
-              sameStatsFoot.innerHTML = `Cached data (${getTimeAgo(c.timestamp)}) <button class="refresh-btn" id="refreshStats" title="Refresh stats">🔄</button>`;
+              sameStatsFoot.innerHTML =
+                `Cached data (${getTimeAgo(c.timestamp)}) <button class="refresh-btn" id="refreshStats" title="Refresh stats">🔄</button>`;
               attachRefreshListener();
               return;
             }
@@ -1068,7 +1149,8 @@
           p.baseToken.address === SAME_CA
         );
         if (!ours.length) {
-          sameStatsFoot.innerHTML = 'No live pair data found yet. <button class="refresh-btn" id="refreshStats" title="Refresh stats">🔄</button>';
+          sameStatsFoot.innerHTML =
+            'No live pair data found yet. <button class="refresh-btn" id="refreshStats" title="Refresh stats">🔄</button>';
           attachRefreshListener();
           return;
         }
@@ -1096,14 +1178,16 @@
         sameVolEl.textContent = volF;
 
         const now = Date.now();
-        sameStatsFoot.innerHTML = 'Live data from DexScreener (just now) <button class="refresh-btn" id="refreshStats" title="Refresh stats">🔄</button>';
+        sameStatsFoot.innerHTML =
+          'Live data from DexScreener (just now) <button class="refresh-btn" id="refreshStats" title="Refresh stats">🔄</button>';
         attachRefreshListener();
 
         localStorage.setItem(CACHE_KEY, JSON.stringify({
           timestamp: now, price: priceF, mc: mcF, liq: liqF, vol: volF
         }));
-      } catch (err) {
-        sameStatsFoot.innerHTML = 'Failed to load stats. Try again. <button class="refresh-btn" id="refreshStats" title="Refresh stats">🔄</button>';
+      } catch {
+        sameStatsFoot.innerHTML =
+          'Failed to load stats. Try again. <button class="refresh-btn" id="refreshStats" title="Refresh stats">🔄</button>';
         attachRefreshListener();
       }
     }
@@ -1225,7 +1309,7 @@
         html += "</tbody></table></div>";
         html += '<div style="font-size:11px;color:var(--text-secondary);margin-top:6px;">'+
           (cloneCount>0
-            ? cloneCount+" clone"+(cloneCount>1?"s":"")+" detected above filters. Check creation time, liquidity & market cap before aping."
+            ? cloneCount+" clone"+(cloneCount>1?"s":"")+" detected above filters. First row is the likely OG – always double-check the CA before you ape."
             : "No clones detected above filters. Ticker looks clean – for now."
           )+
           "</div>";
