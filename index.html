@@ -9,12 +9,8 @@
     content="$SAME – the original SAME coin on Solana. Our scanner helps CT find the OG token in a sea of copy-paste tickers and logos. The OG always wins."
   />
 
-  <!-- Favicon: uses transparent logo as tiny icon if you want -->
-  <link
-    rel="icon"
-    href="same-coin-logo.png"
-    type="image/png"
-  />
+  <!-- Favicon (transparent logo) -->
+  <link rel="icon" href="same-coin-logo.png" type="image/png" />
 
   <style>
     /* ========== RESET & BASE ========== */
@@ -30,7 +26,7 @@
       --txt-muted:  #9ca3af;
 
       --glass-main: rgba(15, 23, 42, 0.82);
-      --glass-card: rgba(15, 23, 42, 0.92);
+      --glass-card: rgba(15, 23, 42, 0.94);
       --glass-border: rgba(148, 163, 184, 0.45);
 
       --accent-green: #22c55e;
@@ -46,7 +42,6 @@
                    "Segoe UI", sans-serif;
       color: var(--txt-strong);
 
-      /* full-page sky background */
       background-color: #020617;
       background-image: url("same-sky-bg.png");
       background-size: cover;
@@ -54,16 +49,22 @@
       background-repeat: no-repeat;
       background-attachment: fixed;
 
-      /* equal padding all around */
+      /* equal frame around the app */
       padding: 32px;
     }
 
     @media (max-width: 900px) {
       body {
         padding: 20px;
-        background-attachment: scroll; /* avoid jumpy mobile scroll */
+        background-attachment: scroll; /* smoother on mobile */
       }
     }
+
+    a {
+      color: #a5b4fc;
+      text-decoration: none;
+    }
+    a:hover { text-decoration: underline; }
 
     /* ========== WRAPPER & GLOBAL LAYOUT ========== */
     .shell {
@@ -73,13 +74,16 @@
 
     .app {
       background:
-        radial-gradient(circle at top left, rgba(255,255,255,0.10), transparent 60%),
-        radial-gradient(circle at bottom right, rgba(15,23,42,0.5), transparent 60%),
+        radial-gradient(circle at 0% 0%, rgba(255,255,255,0.12), transparent 55%),
+        radial-gradient(circle at 100% 100%, rgba(37,99,235,0.20), transparent 55%),
         var(--glass-main);
       border-radius: 32px;
       border: 1px solid var(--glass-border);
-      backdrop-filter: blur(26px);
-      box-shadow: 0 32px 80px rgba(15, 23, 42, 0.9);
+      backdrop-filter: blur(28px) saturate(135%);
+      box-shadow:
+        0 36px 90px rgba(15, 23, 42, 0.92),
+        0 0 0 1px rgba(15, 23, 42, 0.9);
+
       padding: 32px 32px 28px;
     }
 
@@ -93,10 +97,16 @@
     .section {
       max-width: 960px;
       margin: 0 auto;
+      padding-top: 32px;
+      padding-bottom: 32px;
     }
 
     .section + .section {
-      margin-top: 40px; /* consistent vertical spacing between sections */
+      margin-top: 16px; /* band spacing */
+    }
+
+    .section > * + * {
+      margin-top: 20px; /* internal rhythm */
     }
 
     .section-title {
@@ -104,16 +114,18 @@
       text-transform: uppercase;
       letter-spacing: 0.12em;
       color: var(--txt-muted);
-      margin-bottom: 10px;
       text-align: center;
     }
 
     .card {
-      background: var(--glass-card);
+      background:
+        linear-gradient(145deg, rgba(15,23,42,0.96), rgba(15,23,42,0.88));
       border-radius: 22px;
-      border: 1px solid var(--glass-border);
-      box-shadow: 0 18px 40px rgba(0, 0, 0, 0.82);
-      padding: 18px 20px;
+      border: 1px solid rgba(30, 64, 175, 0.4);
+      box-shadow:
+        0 18px 40px rgba(15, 23, 42, 0.90),
+        0 0 0 0.5px rgba(148, 163, 184, 0.5);
+      padding: 18px 22px;
     }
 
     .label {
@@ -129,12 +141,6 @@
                    "Courier New", monospace;
       word-break: break-all;
     }
-
-    a {
-      color: #a5b4fc;
-      text-decoration: none;
-    }
-    a:hover { text-decoration: underline; }
 
     /* ========== BADGE STRIP ========== */
     .badge-row {
@@ -223,13 +229,13 @@
       border: 1px solid rgba(45, 212, 191, 0.7);
       color: #a5f3fc;
       font-size: 13px;
+      max-width: max-content;
     }
 
     .cta-row {
       display: flex;
       flex-wrap: wrap;
       gap: 12px;
-      margin-top: 4px;
     }
 
     .btn {
@@ -239,20 +245,19 @@
       font-weight: 600;
       border: none;
       cursor: pointer;
-      text-decoration: none;
       display: inline-flex;
       align-items: center;
       justify-content: center;
       white-space: nowrap;
       transition: transform 0.2s ease-out, box-shadow 0.2s ease-out, background 0.2s ease-out;
+      text-decoration: none;
     }
 
     .btn-primary {
-      background: linear-gradient(120deg, var(--accent-green), var(--accent-lime));
+      background: linear-gradient(120deg, #22c55e, #a3e635);
       color: #052e16;
       box-shadow: 0 18px 40px rgba(34, 197, 94, 0.6);
     }
-
     .btn-primary:hover {
       transform: translateY(-2px);
       box-shadow: 0 22px 52px rgba(34, 197, 94, 0.7);
@@ -263,7 +268,6 @@
       color: var(--txt-strong);
       border: 1px solid rgba(148, 163, 184, 0.6);
     }
-
     .btn-outline:hover {
       border-color: var(--accent-purple);
       box-shadow: 0 16px 36px rgba(15, 23, 42, 0.8);
@@ -290,14 +294,18 @@
       object-fit: cover;
     }
 
-    /* ========== TOKEN & STATS ========== */
+    /* ========== STATS ========== */
     .stats-box {
-      margin-top: 20px;
-      padding: 18px 22px;
-      border-radius: 22px;
-      background: radial-gradient(circle at top left, rgba(59,130,246,0.4), rgba(15,23,42,0.96));
-      border: 1px solid rgba(59, 130, 246, 0.8);
-      box-shadow: 0 20px 44px rgba(0,0,0,0.9);
+      padding: 20px 22px;
+      border-radius: 24px;
+      background:
+        linear-gradient(135deg, rgba(15,23,42,0.95), rgba(15,23,42,0.80)) border-box,
+        linear-gradient(120deg, rgba(59,130,246,0.9), rgba(96,165,250,0.3)) border-box;
+      border: 1px solid transparent;
+      box-shadow:
+        0 24px 60px rgba(15,23,42,0.95),
+        0 0 0 0.5px rgba(255,255,255,0.12);
+      backdrop-filter: blur(32px) saturate(150%);
     }
 
     .stats-title {
@@ -312,7 +320,7 @@
     .stats-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-      gap: 16px;
+      gap: 18px;
     }
 
     .stat-label {
@@ -336,7 +344,7 @@
       text-align: center;
     }
 
-    /* ========== MEME / VERIFY / SECURITY / HOW-TO ========== */
+    /* ========== MEME, VERIFY, SECURITY, HOW-TO ========== */
     .pill-row {
       display: flex;
       flex-wrap: wrap;
@@ -357,13 +365,14 @@
     .info-list {
       font-size: 13px;
       color: var(--txt-muted);
-      margin-top: 8px;
       list-style: disc;
       padding-left: 20px;
     }
 
     .verify-list li + li,
-    .info-list li + li { margin-top: 4px; }
+    .info-list li + li {
+      margin-top: 4px;
+    }
 
     .security-grid {
       display: grid;
@@ -411,7 +420,7 @@
     .scanner-form-row {
       display: flex;
       gap: 8px;
-      margin-top: 14px;
+      margin-top: 16px;
       margin-bottom: 8px;
     }
 
@@ -560,7 +569,7 @@
           </p>
 
           <div class="hero-pill">
-            Built to help CT identify the real one: the OG always wins.
+            Built to help CT identify the real one when everyone is chasing the same ticker.
           </div>
 
           <div class="cta-row">
@@ -588,7 +597,7 @@
         </div>
 
         <div class="hero-art-wrap">
-          <img src="same-hero-art.png" alt="Same Coin hero art" class="hero-art" />
+          <img src="same-hero-art.png" alt="$SAME hero art" class="hero-art" />
         </div>
       </section>
 
@@ -628,7 +637,7 @@
         </div>
       </section>
 
-      <!-- MEME, VERIFY, SECURITY, HOW TO BUY -->
+      <!-- MEME / VERIFY / SECURITY / HOW TO BUY -->
       <section class="section">
         <div class="section-title">Meme energy</div>
         <div class="card" style="text-align:center;">
@@ -649,7 +658,7 @@
             <li class="mono" style="margin-left:12px;">
               4nBQGUjd3oRSEQCkbRuBVsz1QA2XuJuXJwPWvG5C
             </li>
-            <li>If the ticker is $SAME but the CA is different, it's a clone.</li>
+            <li>If the ticker is <strong>$SAME</strong> but the CA is different, it's a clone.</li>
             <li>Same art + different contract = <strong>vamp</strong>, not OG.</li>
             <li>
               Always verify on
@@ -684,8 +693,8 @@
           <ol class="step-list">
             <li>Install a Solana wallet like Phantom or Solflare.</li>
             <li>Fund your wallet with SOL from an exchange (Coinbase, Binance, etc.).</li>
-            <li>Open the official Pump.fun link for $SAME and connect your wallet.</li>
-            <li>Enter how much SOL you want to swap for $SAME and confirm.</li>
+            <li>Open the official Pump.fun page for $SAME and connect your wallet.</li>
+            <li>Enter how much SOL you want to swap into $SAME and confirm.</li>
             <li>Double-check the contract address and welcome to the OG $SAME community.</li>
           </ol>
         </div>
@@ -698,7 +707,7 @@
             <div class="scanner-heading">$SAME Scanner – help CT find the OG</div>
             <div class="scanner-sub">
               Paste any <strong>ticker symbol</strong>. We use DexScreener to find
-              all active Solana pairs, filter out low-liquidity / zero-volume junk,
+              active Solana pairs, filter out low-liquidity / zero-volume junk,
               sort by first pair time and liquidity, and highlight the
               <strong>likely OG token</strong>.
             </div>
@@ -725,7 +734,7 @@
       <section class="section">
         <div class="community-card">
           <h3 style="font-size:18px;margin-bottom:8px;">Join the $SAME community</h3>
-          <p style="font-size:13px;color:var(--txt-main);">
+          <p style="font-size:13px;color:var(--txt-main);max-width:560px;margin:0 auto;">
             Share the scanner, compare OG vs vamps, and build a CT that always
             knows which bag is real.
           </p>
@@ -870,6 +879,7 @@
     /* ===== Scanner (DexScreener search endpoint) ===== */
     tickerForm.addEventListener("submit", async (e) => {
       e.preventDefault();
+
       const raw = tickerInput.value.trim().toUpperCase().replace(/[^A-Z0-9]/g, "");
       if (!raw) {
         scanStatus.textContent = "Enter a ticker (e.g., SAME, PEPE, BONK).";
@@ -947,7 +957,7 @@
         const clones = Math.max(0, total - 1);
         scanStatus.textContent =
           `Found ${total} active token${total > 1 ? "s" : ""} using $${raw} on Solana. ` +
-          `First row is the earliest, highest-liquidity candidate for the OG.`;
+          `First row is the earliest, highest-liquidity candidate for the OG – always confirm the CA.`;
 
         let html = '<div class="results-table-wrapper"><table><thead><tr>' +
           '<th>#</th><th>Token</th><th>CA</th><th>First pair</th>' +
@@ -977,10 +987,10 @@
 
         html += "</tbody></table></div>";
         html += `<div style="font-size:11px;color:var(--txt-muted);margin-top:6px;">
-                   ${clones > 0
-                     ? `${clones} clone${clones > 1 ? "s" : ""} detected above filters. Always double-check the CA before you ape.`
-                     : "No clones detected above filters. Ticker looks clean – for now."
-                   }
+                  ${clones > 0
+                    ? `${clones} clone${clones > 1 ? "s" : ""} detected above filters. Always double-check the CA before you ape.`
+                    : "No clones detected above filters. Ticker looks clean – for now."
+                  }
                  </div>`;
 
         resultsContainer.innerHTML = html;
