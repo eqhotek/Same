@@ -6,1306 +6,475 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta
     name="description"
-    content="$SAME – the OG SAME coin on Solana. Our scanner helps CT find the original token when tickers and logos are copied. The OG always wins."
-  />
-
-  <!-- Favicon -->
-  <link
-    rel="icon"
-    href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧬</text></svg>"
-    type="image/svg+xml"
+    content="$SAME – the original SAME coin on Solana. Our scanner helps CT identify the OG token in a sea of copies. The OG always wins."
   />
 
   <style>
-    * { box-sizing: border-box; margin: 0; padding: 0; }
+    /* RESET */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
     :root {
-      --text-primary: #f9fafb;
-      --text-secondary: #e5e7eb;
-      --text-tertiary: #9ca3af;
+      --txt1: #f8fafc;
+      --txt2: #e2e8f0;
+      --txt3: #94a3b8;
 
-      --card-bg: rgba(15, 23, 42, 0.94);
-      --card-border: rgba(148, 163, 184, 0.45);
+      --glass-bg: rgba(15,23,42,0.70);
+      --glass-brd: rgba(148,163,184,0.35);
+      --glass-bg2: rgba(15,23,42,0.82);
+      --glass-brd2: rgba(100,116,139,0.55);
 
-      --status-ok: #4ade80;
-      --status-err: #fb7185;
-
-      --link-color: #a5b4fc;
-      --link-hover: #818cf8;
+      --accent-green: #22c55e;
+      --accent-purple: #a855f7;
+      --accent-cyan: #22d3ee;
     }
 
+    /* PAGE LAYOUT */
     html, body {
       height: 100%;
-    }
-
-    body {
+      width: 100%;
       font-family: system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text",
-        "Segoe UI", sans-serif;
-      line-height: 1.5;
-      color: var(--text-primary);
-      margin: 0;
-
-      /* Seamless sky background */
-      background-color: #020617;
+                   "Segoe UI", sans-serif;
       background-image: url("same-sky-bg.png");
-      background-position: center center;
       background-size: cover;
+      background-position: center;
       background-repeat: no-repeat;
       background-attachment: fixed;
+      color: var(--txt1);
 
-      min-height: 100vh;
-      display: block;
-      padding: 16px;
-      overflow-x: hidden;
+      /* Equal padding all around */
+      padding: 32px;
     }
 
-    @media (max-width: 1024px) {
-      body { background-attachment: scroll; }
+    @media(max-width: 900px) {
+      body { padding: 20px; background-attachment: scroll; }
     }
 
-    .shell {
-      max-width: 1280px;
-      width: 100%;
-      margin: 0 auto;
-    }
-
+    /* WRAPPER */
     .app {
-      border-radius: 32px;
-      padding: 26px 16px 22px;
+      max-width: 1180px;
       margin: 0 auto;
 
-      /* Lighter, more glassy */
       background:
-        radial-gradient(circle at top left, rgba(148,163,184,0.16), transparent 55%),
-        radial-gradient(circle at bottom right, rgba(56,189,248,0.18), transparent 55%),
-        rgba(15, 23, 42, 0.80);
+        radial-gradient(circle at top left, rgba(255,255,255,0.10), transparent 60%),
+        radial-gradient(circle at bottom right, rgba(255,255,255,0.08), transparent 60%),
+        var(--glass-bg);
 
-      border: 1px solid rgba(148, 163, 184, 0.35);
-      box-shadow:
-        0 28px 70px rgba(0, 0, 0, 0.88),
-        0 0 0 1px rgba(15, 23, 42, 0.7);
-      backdrop-filter: blur(26px);
-      animation: fadeIn 0.4s ease-out;
+      border: 1px solid var(--glass-brd);
+      backdrop-filter: blur(28px);
+      border-radius: 34px;
+
+      padding: 40px;
+      box-shadow: 0 30px 80px rgba(0,0,0,0.60);
     }
 
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(18px) scale(0.99); }
-      to   { opacity: 1; transform: translateY(0) scale(1); }
+    @media(max-width: 780px) {
+      .app { padding: 26px; border-radius: 24px; }
     }
 
-    @media (min-width: 768px) {
-      .app { padding: 32px 24px 24px; }
-    }
-
-    @media (min-width: 1024px) {
-      .app { padding: 36px 32px 26px; }
-    }
-
-    .badge-row {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      align-items: center;
-      justify-content: space-between;
-      margin-bottom: 16px;
-      font-size: 11px;
-      text-transform: uppercase;
-      letter-spacing: 0.16em;
-      color: var(--text-tertiary);
-    }
-
-    .badge-group {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      align-items: center;
-    }
-
-    .badge {
-      padding: 4px 10px;
-      border-radius: 999px;
-      border: 1px solid rgba(148, 163, 184, 0.55);
-      background: rgba(15, 23, 42, 0.96);
-      color: #e5e7eb;
-    }
-
+    /* HERO */
     .hero {
-      display: grid;
-      grid-template-columns: minmax(0, 1fr);
-      gap: 24px;
-    }
-
-    @media (min-width: 980px) {
-      .hero {
-        grid-template-columns: minmax(0, 3fr) minmax(0, 2.1fr);
-        gap: 28px;
-        align-items: flex-start;
-      }
-    }
-
-    .hero-main {
       display: flex;
-      flex-direction: column;
-      gap: 16px;
+      flex-direction: row;
+      gap: 40px;
+      flex-wrap: wrap;
     }
 
-    .logo-wrap {
-      display: flex;
-      align-items: center;
-      gap: 20px;
-      margin-bottom: 4px;
+    .hero-logo {
+      width: 160px;
+      height: auto;
+      flex-shrink: 0;
+      filter: drop-shadow(0 14px 30px rgba(0,0,0,0.75));
     }
 
-    .logo-circle {
-      width: 96px;
-      height: 96px;
-      padding: 10px;
-      border-radius: 999px;
-      background: radial-gradient(circle at 25% 20%, #ffffff, #020617);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      border: 1px solid rgba(148,163,184,0.8);
-      box-shadow: 0 22px 50px rgba(0,0,0,0.95);
-      overflow: hidden;
+    @media(max-width: 780px) {
+      .hero { flex-direction: column; }
+      .hero-logo { width: 140px; }
     }
 
-    .logo-circle img {
-      width: 100%;
-      height: 100%;
-      object-fit: contain;
-    }
-
-    .hero-main h1 {
-      font-size: clamp(30px, 5vw, 40px);
-      line-height: 1.05;
-      letter-spacing: -0.04em;
+    h1 {
+      font-size: clamp(32px, 5vw, 46px);
+      font-weight: 700;
+      line-height: 1.1;
+      margin-bottom: 10px;
     }
 
     .hero-highlight {
-      display: block;
-      background: linear-gradient(90deg, #22c55e, #a855f7, #22d3ee);
+      background: linear-gradient(90deg, var(--accent-green), var(--accent-purple), var(--accent-cyan));
       -webkit-background-clip: text;
-      background-clip: text;
       color: transparent;
     }
 
     .hero-sub {
-      font-size: 15px;
-      color: var(--text-secondary);
-      max-width: 560px;
+      font-size: 17px;
+      color: var(--txt2);
+      max-width: 520px;
+      margin-bottom: 22px;
     }
 
-    .hero-sub strong { color: #f9fafb; }
-    .hero-sub em { color: #e5e7eb; font-style: italic; }
-
-    .hero-meme {
-      font-size: 14px;
-      color: var(--text-tertiary);
-    }
-
-    .meme-pill {
-      display: inline-flex;
-      align-items: center;
-      padding: 8px 12px;
-      border-radius: 999px;
-      background: rgba(15, 118, 110, 0.25);
-      border: 1px solid rgba(45, 212, 191, 0.7);
-      font-size: 13px;
-      color: #a5f3fc;
-    }
-
+    /* CTA */
     .cta-row {
       display: flex;
       flex-wrap: wrap;
-      gap: 10px;
+      gap: 12px;
+      margin-bottom: 32px;
     }
 
-    button,
     .btn {
-      border: none;
-      cursor: pointer;
+      padding: 12px 22px;
       border-radius: 999px;
-      font-size: 14px;
-      padding: 10px 18px;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
+      font-size: 15px;
+      font-weight: 600;
       text-decoration: none;
-      white-space: nowrap;
-      transition: all 0.18s ease-out;
+      color: #000;
+      cursor: pointer;
+      border: none;
+      display: inline-block;
+      text-align: center;
+      transition: 0.22s ease;
     }
 
     .btn-primary {
-      background: linear-gradient(120deg, #22c55e, #a3e635);
-      color: #052e16;
-      font-weight: 600;
-      box-shadow: 0 18px 44px rgba(34, 197, 94, 0.6);
+      background: linear-gradient(120deg, var(--accent-green), #a3e635);
+      box-shadow: 0 16px 36px rgba(34,197,94,0.55);
     }
 
-    .btn-primary:hover { transform: translateY(-1px) scale(1.01); }
+    .btn-primary:hover {
+      transform: translateY(-2px) scale(1.02);
+      box-shadow: 0 20px 48px rgba(34,197,94,0.65);
+    }
 
     .btn-outline {
-      background: rgba(15, 23, 42, 0.96);
-      border: 1px solid rgba(55, 65, 81, 0.9);
-      color: var(--text-primary);
+      background: var(--glass-bg2);
+      color: var(--txt1);
+      border: 1px solid var(--glass-brd2);
     }
 
     .btn-outline:hover {
-      border-color: rgba(59, 130, 246, 0.9);
-      box-shadow: 0 12px 30px rgba(15, 23, 42, 0.8);
+      border-color: var(--accent-purple);
+      transform: translateY(-2px);
     }
 
-    .btn-wallet {
-      background: rgba(30, 64, 175, 0.34);
-      border: 1px solid rgba(59, 130, 246, 0.8);
-      color: #bfdbfe;
-      font-weight: 500;
-    }
-
-    .status {
-      font-size: 13px;
-      color: var(--text-tertiary);
-      min-height: 18px;
-      margin-top: 8px;
-    }
-
-    .status.ok  { color: var(--status-ok); }
-    .status.err { color: var(--status-err); }
-
+    /* CARD */
     .card {
-      border-radius: 22px;
-      padding: 14px 16px;
-      background: var(--card-bg);
-      border: 1px solid var(--card-border);
-      box-shadow: 0 18px 40px rgba(0, 0, 0, 0.82);
-      margin-top: 16px;
+      background: var(--glass-bg2);
+      border: 1px solid var(--glass-brd2);
+      padding: 18px 20px;
+      border-radius: 20px;
+      margin-top: 30px;
+      box-shadow: 0 18px 40px rgba(0,0,0,0.70);
     }
 
-    .token-card { margin-top: 16px; }
-
-    .token-label {
-      color: var(--text-tertiary);
+    .label {
+      font-size: 12px;
       text-transform: uppercase;
       letter-spacing: 0.1em;
-      font-size: 11px;
+      color: var(--txt3);
+      margin-bottom: 4px;
     }
 
-    .token-row {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 8px;
-      flex-wrap: wrap;
-    }
-
-    .token-value {
-      word-break: break-all;
-      font-family: ui-monospace, Menlo, Monaco, Consolas,
-        "Liberation Mono","Courier New", monospace;
-      font-size: 12px;
-      color: var(--text-primary);
-    }
-
-    .copy-btn {
-      font-size: 11px;
-      padding: 6px 10px;
-      border-radius: 999px;
-      border: 1px solid var(--card-border);
-      background: rgba(15, 23, 42, 0.98);
-      cursor: pointer;
-      color: var(--text-primary);
-    }
-
-    .copy-btn:hover {
-      background: rgba(59, 130, 246, 0.18);
-      border-color: rgba(59, 130, 246, 0.7);
-    }
-
-    .same-stats {
-      margin-top: 16px;
-      padding: 12px 14px;
-      border-radius: 22px;
-      background: radial-gradient(circle at top left, rgba(59,130,246,0.55), rgba(15,23,42,0.98));
-      border: 1px solid rgba(59, 130, 246, 0.9);
-      box-shadow: 0 18px 46px rgba(0,0,0,0.9);
+    .value {
+      font-family: ui-monospace, Menlo, Consolas;
       font-size: 13px;
-    }
-
-    .same-stats-title {
-      font-size: 12px;
-      text-transform: uppercase;
-      letter-spacing: 0.12em;
-      color: #bfdbfe;
-      margin-bottom: 8px;
-      font-weight: 600;
-    }
-
-    .same-stats-grid {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0,1fr));
-      gap: 8px 16px;
-    }
-
-    @media (min-width: 640px) {
-      .same-stats-grid { grid-template-columns: repeat(4, minmax(0,1fr)); }
-    }
-
-    .same-stat-label {
-      font-size: 11px;
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
-      color: var(--text-tertiary);
-      margin-bottom: 2px;
-    }
-
-    .same-stat-value {
-      font-size: 14px;
-      font-weight: 600;
-      color: var(--text-primary);
-    }
-
-    .same-stats-foot {
-      margin-top: 8px;
-      font-size: 11px;
-      color: var(--text-tertiary);
-      display: flex;
-      align-items: center;
-      gap: 6px;
-    }
-
-    .refresh-btn {
-      font-size: 16px;
-      cursor: pointer;
-      padding: 2px 6px;
-      border-radius: 6px;
-      background: transparent;
-      border: 1px solid transparent;
-    }
-
-    .refresh-btn:hover {
-      background: rgba(59,130,246,0.2);
-      border-color: rgba(59,130,246,0.4);
-    }
-
-    .refresh-btn.spinning { animation: spin 1s linear; }
-    @keyframes spin { from{transform:rotate(0)} to{transform:rotate(360deg)} }
-
-    .section-block {
-      margin-top: 18px;
-      padding-top: 14px;
-      border-top: 1px dashed rgba(55,65,81,0.9);
-      font-size: 13px;
-    }
-
-    .section-title {
-      font-size: 12px;
-      text-transform: uppercase;
-      letter-spacing: 0.12em;
-      color: var(--text-tertiary);
-      margin-bottom: 8px;
-      font-weight: 600;
-    }
-
-    .meme-grid { display:flex; flex-wrap:wrap; gap:8px; }
-
-    .meme-tag {
-      padding: 6px 10px;
-      border-radius: 999px;
-      border: 1px solid rgba(55,65,81,0.9);
-      background: rgba(15,23,42,0.98);
-      color: var(--text-primary);
-      font-size: 12px;
-    }
-
-    .list {
-      font-size: 12px;
-      color: var(--text-tertiary);
-      padding-left: 18px;
-    }
-
-    .list li { margin-bottom: 6px; }
-
-    .security-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
-      gap: 12px;
-      margin-top: 10px;
-    }
-
-    .security-item {
-      display: flex;
-      gap: 10px;
-      align-items: flex-start;
-      padding: 10px;
-      border-radius: 16px;
-      background: rgba(15,23,42,0.98);
-      border: 1px solid rgba(55,65,81,0.95);
-    }
-
-    .security-item div {
-      font-size: 12px;
-      color: var(--text-secondary);
-    }
-
-    .steps-list {
-      counter-reset: step-counter;
-      list-style: none;
-      padding: 0;
-      font-size: 12px;
-      color: var(--text-secondary);
-    }
-
-    .steps-list li {
-      counter-increment: step-counter;
-      position: relative;
-      padding-left: 32px;
-      margin-bottom: 10px;
-    }
-
-    .steps-list li::before {
-      content: counter(step-counter);
-      position: absolute;
-      left: 0; top: 0;
-      width: 22px; height: 22px;
-      background: linear-gradient(135deg,#22c55e,#a3e635);
-      color: #052e16;
-      border-radius: 50%;
-      display:flex; align-items:center; justify-content:center;
-      font-size: 12px; font-weight: 600;
-    }
-
-    .hero-side {
-      border-radius: 22px;
-      padding: 14px 16px 14px;
-      background: radial-gradient(circle at top, rgba(51,65,85,0.7), rgba(15,23,42,0.98));
-      border: 1px solid rgba(55,65,81,0.95);
-      box-shadow: 0 22px 46px rgba(0,0,0,0.9);
-      font-size: 13px;
-    }
-
-    .hero-side-title {
-      font-size: 13px;
-      text-transform: uppercase;
-      letter-spacing: 0.16em;
-      color: var(--text-tertiary);
-      margin-bottom: 8px;
-      font-weight: 600;
-    }
-
-    .hero-side-body {
-      font-size: 13px;
-      color: var(--text-secondary);
-      margin-bottom: 12px;
-    }
-
-    .mono {
-      font-family: ui-monospace, Menlo, Monaco, Consolas,
-        "Liberation Mono","Courier New", monospace;
       word-break: break-all;
     }
 
-    /* Scanner */
-    .scanner {
-      margin-top: 28px;
-      padding-top: 20px;
-      border-top: 1px solid rgba(55,65,81,0.9);
+    /* LIVE STATS */
+    .stats-box {
+      margin-top: 22px;
+      padding: 20px;
+      border-radius: 22px;
+      background: radial-gradient(circle at top left, rgba(59,130,246,0.40), rgba(15,23,42,0.88));
+      border: 1px solid rgba(59,130,246,0.75);
+      box-shadow: 0 18px 50px rgba(0,0,0,0.8);
     }
 
-    .scanner-header {
-      display:flex;
-      flex-wrap:wrap;
-      justify-content:space-between;
-      gap:10px;
-      align-items:baseline;
-      margin-bottom:10px;
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+      gap: 20px;
     }
 
-    .scanner-title { font-size:16px; font-weight:600; }
-    .scanner-sub   { font-size:12px; color:var(--text-tertiary); max-width:440px; }
+    .stat-title {
+      font-size: 12px;
+      text-transform: uppercase;
+      color: var(--txt3);
+      margin-bottom: 4px;
+    }
 
-    .scanner-form {
-      display:flex;
-      flex-wrap:wrap;
-      gap:8px;
-      margin-bottom:12px;
+    .stat-val {
+      font-size: 18px;
+      font-weight: 600;
+    }
+
+    /* SCANNER */
+    .scanner-title {
+      font-size: 20px;
+      font-weight: 600;
+      margin-bottom: 6px;
+    }
+
+    .scanner-sub {
+      font-size: 13px;
+      color: var(--txt3);
+      margin-bottom: 14px;
     }
 
     .scanner-input {
-      flex:1 1 140px;
-      min-width:0;
-      border-radius:999px;
-      border:1px solid rgba(75,85,99,0.9);
-      background:rgba(15,23,42,0.98);
-      padding:9px 12px;
-      color:var(--text-primary);
-      font-size:14px;
+      flex: 1;
+      padding: 12px 16px;
+      border-radius: 999px;
+      border: 1px solid rgba(100,116,139,0.4);
+      background: rgba(15,23,42,0.85);
+      color: var(--txt1);
+      font-size: 15px;
+      outline: none;
     }
 
-    .scanner-input:focus {
-      outline:none;
-      border-color:rgba(59,130,246,0.9);
-      box-shadow:0 0 0 3px rgba(59,130,246,0.25);
+    .scanner-row {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 14px;
     }
-
-    .scanner-btn {
-      border-radius:999px;
-      border:none;
-      padding:9px 16px;
-      background:linear-gradient(120deg,#38bdf8,#a855f7);
-      color:#fff;
-      font-size:14px;
-      font-weight:500;
-      cursor:pointer;
-      white-space:nowrap;
-    }
-
-    .scanner-status {
-      font-size:12px;
-      color:var(--text-tertiary);
-      min-height:18px;
-      margin-bottom:6px;
-    }
-
-    .scanner-status.ok  { color:var(--status-ok); }
-    .scanner-status.err { color:var(--status-err); }
 
     .results-table-wrapper {
-      margin-top:6px;
-      max-height:260px;
-      overflow:auto;
-      border-radius:14px;
-      border:1px solid rgba(55,65,81,0.95);
-      background:rgba(15,23,42,0.98);
-      box-shadow:0 18px 40px rgba(0,0,0,0.9);
+      margin-top: 10px;
+      overflow: auto;
+      border-radius: 12px;
+      border: 1px solid rgba(55,65,81,0.9);
+      background: rgba(15,23,42,0.95);
     }
 
-    table { width:100%; border-collapse:collapse; font-size:12px; }
-    thead { background:rgba(15,23,42,0.98); position:sticky; top:0; z-index:1; }
-
-    th, td {
-      padding:8px 10px;
-      text-align:left;
-      border-bottom:1px solid rgba(55,65,81,0.95);
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
     }
 
     th {
-      font-weight:500;
-      color:var(--text-tertiary);
-      text-transform:uppercase;
-      letter-spacing:0.08em;
-      font-size:11px;
-      white-space:nowrap;
+      background: rgba(15,23,42,0.95);
+      color: var(--txt3);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      font-size: 11px;
+      padding: 10px;
+      border-bottom: 1px solid rgba(55,65,81,0.7);
+      text-align: left;
     }
 
-    tbody tr:last-child td { border-bottom:none; }
-    tbody tr:nth-child(even){ background:rgba(15,23,42,0.7); }
-
-    .pill-og {
-      display:inline-flex;
-      align-items:center;
-      padding:3px 7px;
-      border-radius:999px;
-      font-size:10px;
-      text-transform:uppercase;
-      letter-spacing:0.12em;
-      background:rgba(21,128,61,0.25);
-      color:#bbf7d0;
-      border:1px solid rgba(34,197,94,0.8);
+    td {
+      padding: 10px;
+      border-bottom: 1px solid rgba(55,65,81,0.6);
+      color: var(--txt1);
     }
 
-    .link-small {
-      color:var(--link-color);
-      text-decoration:none;
-      font-size:11px;
-      white-space:nowrap;
-    }
-    .link-small:hover { text-decoration:underline; color:var(--link-hover); }
-
-    /* Community */
-    .community {
-      margin-top:26px;
-      padding:18px 18px 16px;
-      border-radius:22px;
-      background:linear-gradient(135deg,rgba(59,130,246,0.3),rgba(168,85,247,0.3));
-      border:1px solid rgba(59,130,246,0.8);
-      text-align:center;
-      box-shadow:0 20px 40px rgba(0,0,0,0.85);
+    tr:nth-child(even) {
+      background: rgba(255,255,255,0.03);
     }
 
-    .community h3 { font-size:18px; margin-bottom:12px; }
-
-    .social-links {
-      display:flex;
-      justify-content:center;
-      gap:12px;
-      flex-wrap:wrap;
-      margin-bottom:14px;
-    }
-
-    .btn-social {
-      background:rgba(15,23,42,0.98);
-      border:1px solid rgba(55,65,81,0.95);
-      color:var(--text-primary);
-      padding:10px 18px;
-      border-radius:999px;
-      text-decoration:none;
-      display:inline-flex;
-      align-items:center;
-      gap:8px;
-      font-size:14px;
-      font-weight:500;
-    }
-
-    .share-section {
-      margin-top:10px;
-      padding-top:10px;
-      border-top:1px dashed rgba(55,65,81,0.9);
-    }
-
-    .share-section p { font-size:12px; color:var(--text-tertiary); margin-bottom:8px; }
-
-    .share-buttons {
-      display:flex;
-      justify-content:center;
-      gap:8px;
-      flex-wrap:wrap;
-    }
-
-    .share-btn {
-      padding:6px 12px;
-      font-size:12px;
-      background:rgba(15,23,42,0.98);
-      border:1px solid rgba(55,65,81,0.95);
-      color:var(--text-primary);
-      text-decoration:none;
-      border-radius:999px;
-      display:inline-flex;
-      align-items:center;
-      gap:6px;
+    .og-pill {
+      background: rgba(34,197,94,0.15);
+      border: 1px solid rgba(34,197,94,0.6);
+      color: #86efac;
+      padding: 2px 6px;
+      font-size: 10px;
+      border-radius: 8px;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-left: 6px;
     }
 
     footer {
-      margin-top:18px;
-      font-size:11px;
-      color:var(--text-secondary);
-      display:flex;
-      justify-content:space-between;
-      gap:8px;
-      flex-wrap:wrap;
-      padding-top:12px;
-      border-top:1px solid rgba(55,65,81,0.9);
-    }
-
-    footer a { color:var(--link-color); text-decoration:none; }
-    footer a:hover { text-decoration:underline; }
-
-    @media (max-width:640px) {
-      .app { padding:24px 18px 20px; border-radius:24px; }
-      .cta-row { flex-direction:column; }
-      .btn { width:100%; }
-      .hero-side { order:-1; }
+      margin-top: 40px;
+      font-size: 12px;
+      color: var(--txt3);
+      text-align: center;
     }
   </style>
 </head>
+
 <body>
-  <div class="shell">
-    <div class="app">
-      <div class="badge-row">
-        <div class="badge-group">
-          <span class="badge">Solana</span>
-          <span class="badge">$SAME • The OG SAME Coin</span>
-        </div>
-        <span>"The OG always wins." – Pumpfun</span>
+  <div class="app">
+
+    <!-- BADGE ROW -->
+    <div class="badge-row">
+      <div class="badge-group">
+        <span class="badge">Solana</span>
+        <span class="badge">$SAME • The OG SAME Coin</span>
       </div>
-
-      <div class="hero">
-        <!-- LEFT: hero + stats -->
-        <div class="hero-main">
-          <div class="logo-wrap">
-            <div class="logo-circle">
-              <img src="same-coin-logo.png" alt="$SAME logo">
-            </div>
-            <div>
-              <h1>
-                Same ticker. Same logo.
-                <span class="hero-highlight">Not the same coin.</span>
-              </h1>
-            </div>
-          </div>
-
-          <p class="hero-sub">
-            <strong>$SAME</strong> is the original SAME coin on Solana.
-            Our tech scans tickers, filters out dead copies, and points CT
-            straight at the <strong>OG token</strong> – so you stop buying the wrong bag.
-          </p>
-
-          <p class="hero-meme">
-            <span class="meme-pill">
-              The OG always wins. Bag the OG.
-            </span>
-          </p>
-
-          <div class="cta-row">
-            <a
-              class="btn btn-primary"
-              target="_blank"
-              rel="noopener noreferrer"
-              href="https://pump.fun/4nBQGUjd3oRSEQCkbRuBVsz1QA2XuJuXJwPWvG5Cpump"
-            >
-              Trade $SAME on Pump.fun
-            </a>
-
-            <button class="btn btn-wallet" id="walletButton">
-              <span id="walletButtonLabel">Connect Wallet</span>
-            </button>
-
-            <a class="btn btn-outline" href="#scanner">
-              Use SAME Scanner
-            </a>
-          </div>
-
-          <div id="walletStatus" class="status" role="status">
-            Optional: install Phantom / Solflare to connect your wallet.
-          </div>
-
-          <!-- TOKEN + CA -->
-          <div class="token-card card">
-            <div class="token-row">
-              <div>
-                <div class="token-label">Token</div>
-                <div class="token-value">$SAME — Solana Token</div>
-              </div>
-            </div>
-            <div class="token-row" style="margin-top:6px;">
-              <div style="flex:1;min-width:0;">
-                <div class="token-label">Contract Address</div>
-                <div class="token-value mono" id="caText">
-                  4nBQGUjd3oRSEQCkbRuBVsz1QA2XuJuXJwPWvG5C
-                </div>
-              </div>
-              <button class="copy-btn" id="copyButton">Copy</button>
-            </div>
-          </div>
-
-          <!-- LIVE STATS -->
-          <div class="same-stats">
-            <div class="same-stats-title">$SAME live stats (via DexScreener)</div>
-            <div class="same-stats-grid">
-              <div>
-                <div class="same-stat-label">Price</div>
-                <div class="same-stat-value" id="samePrice">Loading...</div>
-              </div>
-              <div>
-                <div class="same-stat-label">Market cap (fdv)</div>
-                <div class="same-stat-value" id="sameMc">Loading...</div>
-              </div>
-              <div>
-                <div class="same-stat-label">Liquidity</div>
-                <div class="same-stat-value" id="sameLiq">Loading...</div>
-              </div>
-              <div>
-                <div class="same-stat-label">24h Volume</div>
-                <div class="same-stat-value" id="sameVol">Loading...</div>
-              </div>
-            </div>
-            <div class="same-stats-foot" id="sameStatsFoot">
-              Fetching live data… <button class="refresh-btn" id="refreshStats" title="Refresh stats">🔄</button>
-            </div>
-          </div>
-
-          <!-- MEMES -->
-          <div class="section-block">
-            <div class="section-title">Meme energy</div>
-            <div class="meme-grid">
-              <span class="meme-tag">"Ever been rugged? Same."</span>
-              <span class="meme-tag">"Buy the SAME coin."</span>
-              <span class="meme-tag">"Same ticker, wrong bag."</span>
-              <span class="meme-tag">"Same logo, different rug."</span>
-              <span class="meme-tag">"Copy-paste devs, original consequences."</span>
-              <span class="meme-tag">"There can only be one $SAME."</span>
-            </div>
-          </div>
-
-          <!-- VERIFY -->
-          <div class="section-block">
-            <div class="section-title">Verify you're in the OG $SAME</div>
-            <ul class="list">
-              <li>Check the <strong>contract address</strong> matches exactly:</li>
-              <li class="mono" style="margin-top:4px;">
-                4nBQGUjd3oRSEQCkbRuBVsz1QA2XuJuXJwPWvG5C
-              </li>
-              <li style="margin-top:6px;">If the ticker is $SAME but the CA is different, it's a clone.</li>
-              <li>Same art + different contract = <strong>vamp</strong>, not OG.</li>
-              <li>
-                Always verify on
-                <a href="https://solscan.io/token/4nBQGUjd3oRSEQCkbRuBVsz1QA2XuJuXJwPWvG5C"
-                   target="_blank" rel="noopener noreferrer" style="color:var(--link-color);">Solscan</a>
-                or
-                <a href="https://birdeye.so/token/4nBQGUjd3oRSEQCkbRuBVsz1QA2XuJuXJwPWvG5C?chain=solana"
-                   target="_blank" rel="noopener noreferrer" style="color:var(--link-color);">Birdeye</a>.
-              </li>
-            </ul>
-          </div>
-
-          <!-- SECURITY -->
-          <div class="section-block">
-            <div class="section-title">Security & transparency</div>
-            <div class="security-grid">
-              <div class="security-item">
-                <div>
-                  <strong>Contract visibility</strong>
-                  Original Pump.fun deployment. Always verify contract before buying.
-                </div>
-              </div>
-              <div class="security-item">
-                <div>
-                  <strong>Independent tools</strong>
-                  Check live risk flags on
-                  <a href="https://rugcheck.xyz/tokens/4nBQGUjd3oRSEQCkbRuBVsz1QA2XuJuXJwPWvG5C"
-                     target="_blank" rel="noopener noreferrer" style="color:var(--link-color);">RugCheck</a>.
-                </div>
-              </div>
-              <div class="security-item">
-                <div>
-                  <strong>The OG token</strong>
-                  First SAME on Solana. Everything else is a copy.
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- HOW TO BUY -->
-          <div class="section-block">
-            <div class="section-title">How to buy $SAME</div>
-            <ol class="steps-list">
-              <li>Get a Solana wallet like <a href="https://phantom.app/" target="_blank" rel="noopener noreferrer" style="color:var(--link-color);">Phantom</a> or <a href="https://solflare.com/" target="_blank" rel="noopener noreferrer" style="color:var(--link-color);">Solflare</a>.</li>
-              <li>Fund your wallet with SOL from an exchange (Coinbase, Binance, etc.).</li>
-              <li>Go to <a href="https://pump.fun/4nBQGUjd3oRSEQCkbRuBVsz1QA2XuJuXJwPWvG5Cpump" target="_blank" rel="noopener noreferrer" style="color:var(--link-color);">Pump.fun</a> and connect your wallet.</li>
-              <li>Enter the amount of SOL you want to swap for $SAME.</li>
-              <li>Confirm the transaction and welcome to the OG $SAME community.</li>
-            </ol>
-          </div>
-        </div>
-
-        <!-- RIGHT: copy-paste card -->
-        <aside class="hero-side">
-          <div class="hero-side-title">The copy-paste problem</div>
-          <p class="hero-side-body">
-            Everyone wants the shortcut: copy the ticker, steal the art,
-            slap it on a new contract and hope exit liquidity shows up.
-            No originality. No respect. Just clones.
-          </p>
-          <ul class="list">
-            <li>Multiple tokens with the <strong>same ticker</strong> &amp; <strong>same logo</strong>.</li>
-            <li>New traders grab the wrong chart. "Ever been rugged?" <strong>Same.</strong></li>
-            <li>
-              <strong>$SAME</strong> is the OG. Everything else is a vamp.<br>
-              <em>"The OG always wins." – Pumpfun</em><br>
-              <em>"Send the vamp to 0."</em>
-            </li>
-          </ul>
-        </aside>
-      </div>
-
-      <!-- SCANNER -->
-      <section class="scanner" id="scanner">
-        <div class="scanner-header">
-          <div class="scanner-title">$SAME Scanner – Find the OG</div>
-          <div class="scanner-sub">
-            Type any <strong>ticker</strong>. We pull active Solana tokens using that symbol,
-            filter out dead charts, sort by age &amp; liquidity, and point CT toward the
-            <strong>likely OG coin</strong>.
-          </div>
-        </div>
-
-        <form id="tickerForm" class="scanner-form">
-          <input
-            id="tickerInput"
-            class="scanner-input"
-            placeholder="Ex: SAME, PEPE, BONK…"
-            autocomplete="off"
-          />
-          <button type="submit" class="scanner-btn">Scan Ticker</button>
-        </form>
-
-        <div id="scanStatus" class="scanner-status" role="status">
-          Powered by DexScreener API. Filters out illiquid, zero-volume junk by default.
-        </div>
-
-        <div id="resultsContainer"></div>
-      </section>
-
-      <!-- COMMUNITY -->
-      <section class="community">
-        <h3>Join the $SAME community</h3>
-        <div class="social-links">
-          <a
-            href="https://x.com/i/communities/1989835044551119209"
-            class="btn-social"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            X Community
-          </a>
-          <a
-            href="https://x.com/search?q=%24SAME%20pumpfun&src=typed_query"
-            class="btn-social"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Search $SAME
-          </a>
-        </div>
-
-        <div class="share-section">
-          <p>Help spread the word about the OG $SAME:</p>
-          <div class="share-buttons">
-            <a
-              href="https://twitter.com/intent/tweet?text=CT%2C%20stop%20buying%20the%20wrong%20bag.%20Use%20the%20SAME%20scanner%20to%20find%20the%20OG%20token%20%E2%80%93%20and%20then%20just%20buy%20the%20SAME%20coin.%20&url=https://yoursite.com"
-              class="share-btn"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Share on X
-            </a>
-            <button class="share-btn" id="copyLinkBtn">
-              Copy Link
-            </button>
-          </div>
-        </div>
-      </section>
-
-      <footer>
-        <span>Not financial advice. Memes on a blockchain. DYOR.</span>
-        <span>
-          Built for $SAME • 100% front-end, open data •
-          <a
-            href="https://solscan.io/token/4nBQGUjd3oRSEQCkbRuBVsz1QA2XuJuXJwPWvG5C"
-            target="_blank"
-            rel="noopener noreferrer"
-          >View on Solscan</a>
-        </span>
-      </footer>
+      <span>"The OG always wins."</span>
     </div>
+
+    <!-- HERO -->
+    <div class="hero">
+      <img src="same-coin-logo.png" class="hero-logo" alt="$SAME Logo"/>
+
+      <div>
+        <h1>
+          Same ticker. Same logo.
+          <span class="hero-highlight">Not the same coin.</span>
+        </h1>
+
+        <p class="hero-sub">
+          <strong>$SAME</strong> is the original SAME coin on Solana.
+          Our tech scans tickers, filters out clones, and points CT straight at the
+          <strong>OG token</strong>.
+        </p>
+
+        <div class="cta-row">
+          <a class="btn btn-primary"
+             href="https://pump.fun/4nBQGUjd3oRSEQCkbRuBVsz1QA2XuJuXJwPWvG5Cpump"
+             target="_blank">
+            Trade $SAME on Pump.fun
+          </a>
+
+          <button class="btn btn-outline" id="walletButton">
+            <span id="walletButtonLabel">Connect Wallet</span>
+          </button>
+
+          <a class="btn btn-outline" href="#scanner">
+            Use SAME Scanner
+          </a>
+        </div>
+
+        <div id="walletStatus" class="status">
+          Optional: install Phantom / Solflare to connect your wallet.
+        </div>
+      </div>
+    </div>
+
+    <!-- TOKEN CARD -->
+    <div class="card">
+      <div class="label">Token</div>
+      <div class="value">$SAME — Solana Token</div>
+
+      <div class="label" style="margin-top:14px;">Contract Address</div>
+      <div class="value" id="caText">4nBQGUjd3oRSEQCkbRuBVsz1QA2XuJuXJwPWvG5C</div>
+    </div>
+
+    <!-- LIVE STATS -->
+    <div class="stats-box">
+      <div class="section-title" style="color:#bfdbfe; margin-bottom:14px;">
+        $SAME Live Stats (DexScreener)
+      </div>
+
+      <div class="stats-grid">
+        <div>
+          <div class="stat-title">Price</div>
+          <div class="stat-val" id="samePrice">Loading…</div>
+        </div>
+        <div>
+          <div class="stat-title">Market Cap</div>
+          <div class="stat-val" id="sameMc">Loading…</div>
+        </div>
+        <div>
+          <div class="stat-title">Liquidity</div>
+          <div class="stat-val" id="sameLiq">Loading…</div>
+        </div>
+        <div>
+          <div class="stat-title">24h Volume</div>
+          <div class="stat-val" id="sameVol">Loading…</div>
+        </div>
+      </div>
+
+      <p id="sameStatsFoot" style="margin-top:14px; font-size:12px; color:var(--txt3);">
+        Fetching live data…
+      </p>
+    </div>
+
+    <!-- SCANNER -->
+    <div class="card" id="scanner">
+      <div class="scanner-title">$SAME Scanner — Find the OG</div>
+      <div class="scanner-sub">
+        Drop any ticker. We locate all active Solana tokens using that symbol,
+        filter out dead charts, sort by age & liquidity, and point you toward
+        the <strong>real OG token</strong>.
+      </div>
+
+      <form id="tickerForm">
+        <div class="scanner-row">
+          <input id="tickerInput" class="scanner-input" placeholder="Ex: SAME, PEPE, BONK…"/>
+          <button type="submit" class="btn btn-primary">Scan</button>
+        </div>
+      </form>
+
+      <div id="scanStatus" class="scanner-status">Ready.</div>
+
+      <div id="resultsContainer"></div>
+    </div>
+
+    <footer>
+      Built for $SAME • Open data • The OG always wins.
+    </footer>
+
   </div>
 
+  <!-- SCRIPT -->
   <script>
     const walletButton = document.getElementById("walletButton");
     const walletButtonLabel = document.getElementById("walletButtonLabel");
     const walletStatus = document.getElementById("walletStatus");
     const caText = document.getElementById("caText");
-    const copyButton = document.getElementById("copyButton");
-
-    const tickerForm = document.getElementById("tickerForm");
-    const tickerInput = document.getElementById("tickerInput");
-    const scanStatus = document.getElementById("scanStatus");
-    const resultsContainer = document.getElementById("resultsContainer");
-
     const samePriceEl = document.getElementById("samePrice");
     const sameMcEl = document.getElementById("sameMc");
     const sameLiqEl = document.getElementById("sameLiq");
     const sameVolEl = document.getElementById("sameVol");
     const sameStatsFoot = document.getElementById("sameStatsFoot");
-    const copyLinkBtn = document.getElementById("copyLinkBtn");
+    const tickerForm = document.getElementById("tickerForm");
+    const tickerInput = document.getElementById("tickerInput");
+    const scanStatus = document.getElementById("scanStatus");
+    const resultsContainer = document.getElementById("resultsContainer");
 
     const SAME_CA = "4nBQGUjd3oRSEQCkbRuBVsz1QA2XuJuXJwPWvG5C";
-    const CACHE_KEY = "sameStatsCache";
-    const CACHE_EXPIRY = 300000; // 5 min
 
-    const MIN_LIQ_USD = 500;
-    const MIN_VOL_24H = 500;
-
-    copyButton.addEventListener("click", async () => {
-      try {
-        await navigator.clipboard.writeText(caText.textContent.trim());
-        copyButton.textContent = "Copied ✓";
-        setTimeout(() => (copyButton.textContent = "Copy"), 2000);
-      } catch {
-        copyButton.textContent = "Failed";
-        setTimeout(() => (copyButton.textContent = "Copy"), 2000);
-      }
-    });
-
-    copyLinkBtn.addEventListener("click", async () => {
-      try {
-        await navigator.clipboard.writeText(window.location.href);
-        const originalHTML = copyLinkBtn.innerHTML;
-        copyLinkBtn.innerHTML = "Copied!";
-        setTimeout(() => (copyLinkBtn.innerHTML = originalHTML), 2000);
-      } catch {}
-    });
-
-    function setWalletStatus(text, type) {
-      walletStatus.textContent = text;
-      walletStatus.classList.remove("ok","err");
-      if (type) walletStatus.classList.add(type);
-    }
-
-    const hasSolana =
-      typeof window !== "undefined" &&
-      window.solana &&
-      (window.solana.isPhantom || window.solana.isSolflare);
+    /* WALLET DETECTION */
+    const hasSolana = window.solana && (window.solana.isPhantom || window.solana.isSolflare);
 
     if (hasSolana) {
-      setWalletStatus("Wallet ready. Connect to vibe with $SAME.", "ok");
+      walletStatus.textContent = "Wallet ready.";
       walletButtonLabel.textContent = "Connect Wallet";
     } else {
-      setWalletStatus("Optional: install Phantom / Solflare to connect your wallet.", null);
+      walletStatus.textContent = "Optional: install Phantom / Solflare to connect.";
       walletButtonLabel.textContent = "Get Wallet";
     }
 
-    walletButton.addEventListener("click", async () => {
-      if (!hasSolana) {
-        window.open("https://phantom.app/", "_blank", "noopener");
-        setWalletStatus("No Solana wallet detected. Install Phantom, then reconnect.", "err");
-        return;
-      }
+    walletButton.onclick = async () => {
+      if (!hasSolana) return open("https://phantom.app/", "_blank");
       try {
-        setWalletStatus("Requesting wallet connection…");
         const resp = await window.solana.connect();
-        const pubkey = resp.publicKey.toString();
-        setWalletStatus("Connected: " + pubkey.slice(0,4) + "…" + pubkey.slice(-4), "ok");
-        walletButtonLabel.textContent = "Wallet Connected ✓";
+        const key = resp.publicKey.toString();
+        walletStatus.textContent = "Connected: " + key.slice(0,4) + "…" + key.slice(-4);
+        walletButtonLabel.textContent = "Connected";
       } catch {
-        setWalletStatus("Wallet connection rejected.", "err");
+        walletStatus.textContent = "Connection rejected.";
       }
-    });
+    };
 
-    if (window.solana && typeof window.solana.on === "function") {
-      window.solana.on("disconnect", () => {
-        setWalletStatus("Wallet disconnected.", "err");
-        walletButtonLabel.textContent = "Connect Wallet";
-      });
-    }
-
-    function formatDate(ts) {
-      if (!ts) return "–";
-      const d = new Date(ts);
-      return isNaN(d.getTime()) ? "–" : d.toLocaleString();
-    }
-
-    function formatUsd(num) {
-      if (num === null || num === undefined) return "–";
-      if (num < 1) return "$" + num.toFixed(4);
-      if (num < 1000) return "$" + num.toFixed(2);
-      if (num < 1_000_000) return "$" + (num / 1000).toFixed(1) + "k";
-      return "$" + (num / 1_000_000).toFixed(1) + "m";
-    }
-
-    function getTimeAgo(t) {
-      const s = Math.floor((Date.now() - t) / 1000);
-      if (s < 60) return s + "s ago";
-      const m = Math.floor(s / 60);
-      if (m < 60) return m + "m ago";
-      const h = Math.floor(m / 60);
-      if (h < 48) return h + "h ago";
-      const d = Math.floor(h / 24);
-      return d + "d ago";
-    }
+    /* UTIL */
+    const fUSD = (n) => {
+      if (!n && n !== 0) return "–";
+      if (n < 1) return "$" + n.toFixed(4);
+      if (n < 1000) return "$" + n.toFixed(2);
+      if (n < 1_000_000) return "$" + (n/1000).toFixed(1) + "k";
+      return "$" + (n/1_000_000).toFixed(1) + "m";
+    };
 
     /* LIVE STATS via DexScreener token endpoint */
-    async function fetchSameStats(force = false) {
-      if (!force) {
-        const cached = localStorage.getItem(CACHE_KEY);
-        if (cached) {
-          try {
-            const c = JSON.parse(cached);
-            if (c && Date.now() - c.timestamp < CACHE_EXPIRY) {
-              samePriceEl.textContent = c.price;
-              sameMcEl.textContent = c.mc;
-              sameLiqEl.textContent = c.liq;
-              sameVolEl.textContent = c.vol;
-              sameStatsFoot.innerHTML =
-                `Cached data (${getTimeAgo(c.timestamp)}) <button class="refresh-btn" id="refreshStats" title="Refresh stats">🔄</button>`;
-              attachRefreshListener();
-              return;
-            }
-          } catch {}
-        }
-      }
-
+    async function loadStats() {
       try {
-        const url = "https://api.dexscreener.com/tokens/v1/solana/" + SAME_CA;
+        const url = `https://api.dexscreener.com/tokens/v1/solana/${SAME_CA}`;
         const res = await fetch(url);
-        if (!res.ok) throw new Error("HTTP " + res.status);
         const data = await res.json();
+
         const entry = Array.isArray(data) ? data[0] : null;
-        if (!entry || !Array.isArray(entry.pairs) || !entry.pairs.length) {
-          sameStatsFoot.innerHTML =
-            'No live pair data found yet. <button class="refresh-btn" id="refreshStats" title="Refresh stats">🔄</button>';
-          attachRefreshListener();
+        if (!entry || !entry.pairs.length) {
+          sameStatsFoot.textContent = "No live pair data found yet.";
           return;
         }
 
-        const bestPair = entry.pairs.reduce((b,p)=>{
-          const liq = p.liquidity && typeof p.liquidity.usd==="number" ? p.liquidity.usd : 0;
-          if (!b) return p;
-          const bl = b.liquidity && typeof b.liquidity.usd==="number" ? b.liquidity.usd : 0;
-          return liq > bl ? p : b;
-        },null);
-
-        const priceUsd = bestPair.priceUsd ? Number(bestPair.priceUsd) : null;
-        const fdv = typeof bestPair.fdv === "number" ? bestPair.fdv : null;
-        const mc  = typeof bestPair.marketCap === "number" ? bestPair.marketCap : null;
-        const liq = bestPair.liquidity && typeof bestPair.liquidity.usd==="number" ? bestPair.liquidity.usd : null;
-        const vol24 = bestPair.volume && typeof bestPair.volume.h24==="number" ? bestPair.volume.h24 : null;
-
-        const priceF = priceUsd !== null ? formatUsd(priceUsd) : "–";
-        const mcF = fdv !== null ? formatUsd(fdv) : mc !== null ? formatUsd(mc) : "–";
-        const liqF = formatUsd(liq);
-        const volF = formatUsd(vol24);
-
-        samePriceEl.textContent = priceF;
-        sameMcEl.textContent = mcF;
-        sameLiqEl.textContent = liqF;
-        sameVolEl.textContent = volF;
-
-        const now = Date.now();
-        sameStatsFoot.innerHTML =
-          'Live data from DexScreener (just now) <button class="refresh-btn" id="refreshStats" title="Refresh stats">🔄</button>';
-        attachRefreshListener();
-
-        localStorage.setItem(CACHE_KEY, JSON.stringify({
-          timestamp: now, price: priceF, mc: mcF, liq: liqF, vol: volF
-        }));
-      } catch {
-        sameStatsFoot.innerHTML =
-          'Failed to load stats. Try again. <button class="refresh-btn" id="refreshStats" title="Refresh stats">🔄</button>';
-        attachRefreshListener();
-      }
-    }
-
-    function attachRefreshListener() {
-      const btn = document.getElementById("refreshStats");
-      if (!btn) return;
-      btn.onclick = async () => {
-        btn.classList.add("spinning");
-        await fetchSameStats(true);
-        setTimeout(()=>btn.classList.remove("spinning"),900);
-      };
-    }
-
-    fetchSameStats();
-
-    function setScanStatus(text,type){
-      scanStatus.textContent = text;
-      scanStatus.classList.remove("ok","err");
-      if (type) scanStatus.classList.add(type);
-    }
-
-    /* SCANNER */
-    tickerForm.addEventListener("submit", async e => {
-      e.preventDefault();
-      const raw = tickerInput.value.trim().replace(/[^a-zA-Z0-9]/g,"");
-      if (!raw || raw.length > 20) {
-        setScanStatus("Invalid ticker: use letters/numbers only, up to 20 chars.","err");
-        resultsContainer.innerHTML = "";
-        return;
-      }
-      const ticker = raw.toUpperCase();
-      setScanStatus("Scanning DexScreener for $"+ticker+" on Solana…");
-      resultsContainer.innerHTML = "";
-
-      try {
-        const url = "https://api.dexscreener.com/latest/dex/search?q="+encodeURIComponent(ticker);
-        const res = await fetch(url);
-        if (!res.ok) throw new Error("HTTP "+res.status);
-        const data = await res.json();
-        const pairs = Array.isArray(data.pairs)?data.pairs:[];
-        const base = pairs.filter(p =>
-          p.chainId==="solana" &&
-          p.baseToken &&
-          typeof p.baseToken.symbol==="string" &&
-          p.baseToken.symbol.toUpperCase()===ticker
-        );
-
-        const filtered = base.filter(p=>{
-          const liq = p.liquidity && typeof p.liquidity.usd==="number" ? p.liquidity.usd : 0;
-          const vol24 = p.volume && typeof p.volume.h24==="number" ? p.volume.h24 : 0;
-          return liq >= MIN_LIQ_USD && vol24 >= MIN_VOL_24H;
-        });
-
-        if (!filtered.length) {
-          setScanStatus("No active Solana pairs using $"+ticker+" above liq/volume filters.","err");
-          resultsContainer.innerHTML = "";
-          return;
-        }
-
-        const byToken = new Map();
-        for (const p of filtered) {
-          const addr = p.baseToken.address;
-          const existing = byToken.get(addr);
-          const createdAt = p.pairCreatedAt || 0;
-          const liq = p.liquidity && typeof p.liquidity.usd==="number" ? p.liquidity.usd : 0;
-          const mc  = typeof p.fdv==="number" ? p.fdv : (typeof p.marketCap==="number" ? p.marketCap : null);
-
-          if (!existing) {
-            byToken.set(addr,{
-              tokenAddress: addr,
-              name: p.baseToken.name,
-              symbol: p.baseToken.symbol,
-              earliestCreatedAt: createdAt,
-              bestLiquidity: liq,
-              bestMc: mc,
-              url: p.url
-            });
-          } else {
-            if (createdAt && (!existing.earliestCreatedAt || createdAt < existing.earliestCreatedAt)) {
-              existing.earliestCreatedAt = createdAt;
-              existing.url = p.url;
-            }
-            if (liq > existing.bestLiquidity) existing.bestLiquidity = liq;
-            if (mc !== null && (existing.bestMc === null || mc > existing.bestMc)) existing.bestMc = mc;
-          }
-        }
-
-        const tokens = Array.from(byToken.values());
-        tokens.sort((a,b)=>(a.earliestCreatedAt||0)-(b.earliestCreatedAt||0));
-
-        const total = tokens.length;
-        const cloneCount = Math.max(0,total-1);
-        setScanStatus("Found "+total+" active token"+(total>1?"s":"")+" using $"+ticker+" on Solana.","ok");
-
-        let html = '<div class="results-table-wrapper"><table><thead><tr>';
-        html += "<th>#</th><th>Token</th><th>CA</th><th>First Pair</th><th>Liquidity</th><th>MC (fdv)</th><th>Links</th>";
-        html += "</tr></thead><tbody>";
-
-        tokens.forEach((t,idx)=>{
-          const isOg = idx===0;
-          const birdeyeUrl = "https://birdeye.so/token/"+t.tokenAddress+"?chain=solana";
-          const solscanUrl = "https://solscan.io/token/"+t.tokenAddress;
-          const dsUrl = t.url || "#";
-
-          html += "<tr>";
-          html += "<td>"+(idx+1)+(isOg?' <span class="pill-og">OG</span>':"")+"</td>";
-          html += "<td>"+(t.name||"Unknown")+"<br><span style='font-size:11px;color:var(--text-tertiary);'>$"+(t.symbol||"")+"</span></td>";
-          html += '<td class="mono" style="max-width:220px;word-break:break-all;">'+t.tokenAddress+"</td>";
-          html += "<td>"+formatDate(t.earliestCreatedAt)+"</td>";
-          html += "<td>"+formatUsd(t.bestLiquidity)+"</td>";
-          html += "<td>"+(t.bestMc!==null?formatUsd(t.bestMc):"–")+"</td>";
-          html += "<td>";
-          html += '<a class="link-small" href="'+dsUrl+'" target="_blank" rel="noopener noreferrer">Chart</a><br>';
-          html += '<a class="link-small" href="'+solscanUrl+'" target="_blank" rel="noopener noreferrer">Solscan</a><br>';
-          html += '<a class="link-small" href="'+birdeyeUrl+'" target="_blank" rel="noopener noreferrer">Birdeye</a>';
-          html += "</td></tr>";
-        });
-
-        html += "</tbody></table></div>";
-        html += '<div style="font-size:11px;color:var(--text-secondary);margin-top:6px;">'+
-          (cloneCount>0
-            ? cloneCount+" clone"+(cloneCount>1?"s":"")+" detected above filters. First row is the likely OG – always double-check the CA before you ape."
-            : "No clones detected above filters. Ticker looks clean – for now."
-          )+
-          "</div>";
-
-        resultsContainer.innerHTML = html;
-      } catch {
-        setScanStatus("Error talking to DexScreener API. Try again shortly.","err");
-        resultsContainer.innerHTML = "";
-      }
-    });
-  </script>
-</body>
-</html>
+        let best = entry.pairs.reduce((a, b) => {
+          const la = a.liquidity?.usd || 0;
+          const lb = b.liquidity?.usd || 
